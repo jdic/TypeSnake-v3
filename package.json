@@ -3,6 +3,9 @@
   "module": "app.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "start": "bun run app.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
