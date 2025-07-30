@@ -16,6 +16,10 @@ export interface IPowerUpContext
   setInvincible(invincible: boolean): void
   isInvincible(): boolean
 
+  teleportSnake(): void
+
+  getBoardDimensions(): { width: number, height: number }
+
   redraw(): void
   clearInterval(): void
   setInterval(callback: () => void, time: number): void

@@ -363,6 +363,44 @@ export class GameEngine implements IPowerUpContext
     return this.invincibilityActive
   }
 
+  teleportSnake(): void
+  {
+    const segments = this.snake.getSegments()
+    const allPowerUps = this.gameStateService.getState().powerUps
+    const occupiedPositions = [...segments, this.apple.getPosition(), ...allPowerUps.map((p) => p.position)]
+
+    let attempts = 0
+    let newPosition: Position
+
+    const getPosition = (range: number): number => Math.floor(Math.random() * range)
+
+    do
+    {
+      newPosition =
+      [
+        getPosition(this.config.board.width),
+        getPosition(this.config.board.height)
+      ]
+
+      attempts++
+    }
+
+    while (
+      attempts < 100 &&
+      occupiedPositions.some((pos) => pos[0] === newPosition[0] && pos[1] === newPosition[1])
+    )
+
+    this.snake.teleportTo(newPosition)
+  }
+
+  getBoardDimensions(): { width: number, height: number }
+  {
+      return {
+        width: this.config.board.width,
+        height: this.config.board.height
+      }
+  }
+
   // START Implementation of IPowerUpContext methods
 
   setRange(range: Range): void

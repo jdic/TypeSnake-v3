@@ -154,4 +154,27 @@ export class Snake
     this.segments = [initialPosition]
     this.direction = [0, -1]
   }
+
+  teleportTo(newPosition: Position): void
+  {
+    if (this.segments.length === 0)
+    {
+      return
+    }
+
+    const currentHead = this.getHead()
+
+    const offset: Position =
+    [
+      newPosition[0] - currentHead[0],
+      newPosition[1] - currentHead[1]
+    ]
+
+    this.segments = this.segments.map((segment) =>
+    {
+      const [x, y] = MathUtils.wrapPosition([segment[0] + offset[0], segment[1] + offset[1]], this.boardWidth, this.boardHeight)
+
+      return [x, y]
+    })
+  }
 }

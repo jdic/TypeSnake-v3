@@ -209,3 +209,26 @@ export class InvincibilityStrategy implements IPowerUpStrategy
     return this.duration
   }
 }
+
+export class TeleportStrategy implements IPowerUpStrategy
+{
+  constructor()
+  {
+
+  }
+
+  apply(context: IPowerUpContext): void
+  {
+    context.teleportSnake()
+  }
+
+  remove(context: IPowerUpContext): void
+  {
+
+  }
+
+  getDuration(): number
+  {
+    return 0
+  }
+}

@@ -45,6 +45,12 @@ export const DEFAULT_CONFIG: IGameConfig =
       enabled: false,
       probability: 0.15,
       duration: 3000
+    },
+    teleport:
+    {
+      enabled: false,
+      probability: 0.2,
+      duration: 0
     }
   },
   icons:
@@ -55,6 +61,7 @@ export const DEFAULT_CONFIG: IGameConfig =
     magnet: '🧲',
     slowMotion: '🧊',
     bonus: '🍐',
-    invincibility: '👻'
+    invincibility: '👻',
+    teleport: '🕳️'
   }
 }
