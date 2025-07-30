@@ -1,5 +1,5 @@
-import type { Position } from '../types/global'
-import { MathUtils } from '../utils/MathUtils'
+import type { Position } from '@type/global'
+import { MathUtils } from '@utils/MathUtils'
 
 /**
  * Represents an Apple entity in the game.

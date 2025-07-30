@@ -1,5 +1,5 @@
-import type { IGameConfig } from '../types/global'
-import { DEFAULT_CONFIG } from './defaults'
+import { DEFAULT_CONFIG } from '@config/defaults'
+import type { IGameConfig } from '@type/global'
 
 /**
  * A builder class for creating and modifying game configurations.

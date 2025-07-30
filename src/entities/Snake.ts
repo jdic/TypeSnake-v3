@@ -1,5 +1,5 @@
-import type { Direction, Position } from '../types/global'
-import { MathUtils } from '../utils/MathUtils'
+import type { Direction, Position } from '@type/global'
+import { MathUtils } from '@utils/MathUtils'
 
 /**
  * Represents a Snake entity in the game.

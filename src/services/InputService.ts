@@ -1,4 +1,4 @@
-import { Movement, type Direction } from '../types/global'
+import { Movement, type Direction } from '@type/global'
 import * as readline from 'readline'
 
 /**

@@ -1,7 +1,7 @@
-import type { PowerUpType, Position, IPowerUpConfig, IPowerUpSettings } from '../types/global'
-import { BonusStrategy, MagnetStrategy, SlowMotionStrategy } from './PowerUpStrategies'
-import { PowerUp, type IPowerUpStrategy } from './PowerUp'
-import { MathUtils } from '../utils/MathUtils'
+import { BonusStrategy, MagnetStrategy, SlowMotionStrategy } from '@powerups/PowerUpStrategies'
+import type { PowerUpType, Position, IPowerUpConfig, IPowerUpSettings } from '@type/global'
+import { PowerUp, type IPowerUpStrategy } from '@powerups/PowerUp'
+import { MathUtils } from '@utils/MathUtils'
 
 /**
  * Factory class for creating power-ups.

@@ -1,4 +1,4 @@
-import type { IBoardConfig, IGameState, IIconsConfig, Position } from '../types/global'
+import type { IBoardConfig, IGameState, IIconsConfig, Position } from '@type/global'
 
 export class RenderService
 {

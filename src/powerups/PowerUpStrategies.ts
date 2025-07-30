@@ -1,4 +1,4 @@
-import type { IPowerUpContext, IPowerUpStrategy } from './PowerUp'
+import type { IPowerUpContext, IPowerUpStrategy } from '@powerups/PowerUp'
 
 /**
  * Strategy for the Magnet power-up.

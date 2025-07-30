@@ -1,4 +1,4 @@
-import type { IGameConfig, ISpeedConfig } from '../types/global'
+import type { IGameConfig, ISpeedConfig } from '@type/global'
 
 export const DEFAULT_SPEEDS: ISpeedConfig =
 {

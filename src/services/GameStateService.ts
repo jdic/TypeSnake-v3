@@ -1,4 +1,4 @@
-import type { IGameState, Position } from '../types/global'
+import type { IGameState, Position } from '@type/global'
 
 /**
  * GameStateService manages the state of the game, including

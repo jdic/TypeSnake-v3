@@ -1,4 +1,4 @@
-import type { Position } from '../types/global'
+import type { Position } from '@type/global'
 
 /**
  * MathUtils provides utility functions for mathematical operations

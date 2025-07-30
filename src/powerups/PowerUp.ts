@@ -1,4 +1,4 @@
-import type { Position, PowerUpType, Range } from '../types/global'
+import type { Position, PowerUpType, Range } from '@type/global'
 
 export interface IPowerUpContext
 {

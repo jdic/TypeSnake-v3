@@ -25,5 +25,16 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
+
+    // Custom paths
+    "paths": {
+      "@type/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"],
+      "@powerups/*": ["./src/powerups/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@core/*": ["./src/core/*"],
+      "@config/*": ["./src/config/*"],
+    }
   }
 }
