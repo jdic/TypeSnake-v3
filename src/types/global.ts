@@ -1,4 +1,4 @@
-export type PowerUpType = 'magnet' | 'slowMotion' | 'bonus' | 'invincibility' | 'teleport'
+export type PowerUpType = 'magnet' | 'slowMotion' | 'bonus' | 'invincibility' | 'teleport' | 'boost' 
 export type Difficulty = 'easy' | 'medium' | 'high' | 'custom'
 export type Range = 'regular' | 'expanded'
 export type Position = [number, number]
@@ -40,6 +40,7 @@ export interface IPowerUpConfig
   magnet: IPowerUpSettings
   invincibility: IPowerUpSettings
   teleport: IPowerUpSettings
+  boost: IPowerUpSettings
 }
 
 export interface IIconsConfig
@@ -52,6 +53,7 @@ export interface IIconsConfig
   bonus: string
   invincibility: string
   teleport: string
+  boost: string
 }
 
 export interface IGameConfig

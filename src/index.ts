@@ -12,7 +12,7 @@ export { Apple } from './entities/Apple'
 // Power-ups
 export { PowerUp } from './powerups/PowerUp'
 export { PowerUpFactory, PowerUpManager } from './powerups/PowerUpManager'
-export { MagnetStrategy, SlowMotionStrategy, BonusStrategy, InvincibilityStrategy } from './powerups/PowerUpStrategies'
+export { MagnetStrategy, SlowMotionStrategy, BonusStrategy, BoostStrategy, InvincibilityStrategy, TeleportStrategy } from './powerups/PowerUpStrategies'
 
 // Services
 export { InputService } from './services/InputService'

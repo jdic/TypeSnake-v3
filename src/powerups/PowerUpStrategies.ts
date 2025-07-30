@@ -210,6 +210,43 @@ export class InvincibilityStrategy implements IPowerUpStrategy
   }
 }
 
+export class BoostStrategy implements IPowerUpStrategy
+{
+  private duration: number
+  private originalUpdateTime: number = 0
+
+  constructor(duration: number = 2000)
+  {
+    this.duration = duration
+  }
+
+  apply(context: IPowerUpContext): void
+  {
+    this.originalUpdateTime = context.getUpdateTime()
+
+    const newUpdateTime = Math.max(30, this.originalUpdateTime - 100)
+
+    context.clearInterval()
+    context.setInterval(() => {  }, newUpdateTime)
+
+    setTimeout(() =>
+    {
+      this.remove(context)
+    }, this.duration)
+  }
+
+  remove(context: IPowerUpContext): void
+  {
+    context.clearInterval()
+    context.setInterval(() => {  }, this.originalUpdateTime)
+  }
+
+  getDuration(): number
+  {
+    return this.duration
+  }
+}
+
 export class TeleportStrategy implements IPowerUpStrategy
 {
   constructor()

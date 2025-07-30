@@ -46,6 +46,12 @@ export const DEFAULT_CONFIG: IGameConfig =
       probability: 0.15,
       duration: 3000
     },
+    boost:
+    {
+      enabled: false,
+      probability: 0.25,
+      duration: 2500
+    },
     teleport:
     {
       enabled: false,
@@ -62,6 +68,7 @@ export const DEFAULT_CONFIG: IGameConfig =
     slowMotion: '🧊',
     bonus: '🍐',
     invincibility: '👻',
-    teleport: '🕳️'
+    teleport: '🕳️',
+    boost: '⚡'
   }
 }
