@@ -57,7 +57,13 @@ export const DEFAULT_CONFIG: IGameConfig =
       enabled: false,
       probability: 0.2,
       duration: 0
-    }
+    },
+    freeze:
+    {
+      enabled: false,
+      probability: 0.3,
+      duration: 1500
+    },
   },
   icons:
   {
@@ -69,6 +75,7 @@ export const DEFAULT_CONFIG: IGameConfig =
     bonus: '🍐',
     invincibility: '👻',
     teleport: '🕳️',
-    boost: '⚡'
+    boost: '⚡',
+    freeze: '❄️'
   }
 }

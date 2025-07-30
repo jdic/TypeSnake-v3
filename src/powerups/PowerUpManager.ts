@@ -1,4 +1,4 @@
-import { BonusStrategy, BoostStrategy, InvincibilityStrategy, MagnetStrategy, SlowMotionStrategy, TeleportStrategy } from '@powerups/PowerUpStrategies'
+import { BonusStrategy, MagnetStrategy, SlowMotionStrategy,  InvincibilityStrategy, TeleportStrategy, BoostStrategy, FreezeStrategy } from '@powerups/PowerUpStrategies'
 import type { PowerUpType, Position, IPowerUpConfig, IPowerUpSettings } from '@type/global'
 import { PowerUp, type IPowerUpStrategy } from '@powerups/PowerUp'
 import { MathUtils } from '@utils/MathUtils'
@@ -20,7 +20,8 @@ export class PowerUpFactory
     bonus: (duration) => new BonusStrategy(duration),
     invincibility: (duration) => new InvincibilityStrategy(duration),
     teleport: (duration) => new TeleportStrategy(),
-    boost: (duration) => new BoostStrategy(duration)
+    boost: (duration) => new BoostStrategy(duration),
+    freeze: (duration) => new FreezeStrategy(duration)
   }
 
   /**

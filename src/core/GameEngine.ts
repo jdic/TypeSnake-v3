@@ -34,6 +34,7 @@ export class GameEngine implements IPowerUpContext
   private currentUpdateTime: number
 
   private invincibilityActive: boolean = false
+  private gameFrozen: boolean = false
 
   constructor(config?: Partial<IGameConfig>)
   {
@@ -209,6 +210,13 @@ export class GameEngine implements IPowerUpContext
   {
     if (this.gameStateService.isPaused() || this.gameStateService.isGameOver())
     {
+      return
+    }
+
+    if (this.gameFrozen)
+    {
+      this.render()
+
       return
     }
 
@@ -391,6 +399,16 @@ export class GameEngine implements IPowerUpContext
     )
 
     this.snake.teleportTo(newPosition)
+  }
+
+  setGameFrozen(frozen: boolean): void
+  {
+    this.gameFrozen = frozen
+  }
+
+  isGameFrozen(): boolean
+  {
+    return this.gameFrozen
   }
 
   getBoardDimensions(): { width: number, height: number }

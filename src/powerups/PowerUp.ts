@@ -18,6 +18,9 @@ export interface IPowerUpContext
 
   teleportSnake(): void
 
+  setGameFrozen(frozen: boolean): void
+  isGameFrozen(): boolean
+
   getBoardDimensions(): { width: number, height: number }
 
   redraw(): void

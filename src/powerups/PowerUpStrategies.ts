@@ -269,3 +269,33 @@ export class TeleportStrategy implements IPowerUpStrategy
     return 0
   }
 }
+
+export class FreezeStrategy implements IPowerUpStrategy
+{
+  private duration: number
+
+  constructor(duration: number = 1500)
+  {
+    this.duration = duration
+  }
+
+  apply(context: IPowerUpContext): void
+  {
+    context.setGameFrozen(true)
+
+    setTimeout(() =>
+    {
+      this.remove(context)
+    }, this.duration)
+  }
+
+  remove(context: IPowerUpContext): void
+  {
+    context.setGameFrozen(false)
+  }
+
+  getDuration(): number
+  {
+    return this.duration
+  }
+}
