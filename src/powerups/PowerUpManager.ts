@@ -42,7 +42,7 @@ export class PowerUpFactory
   /**
    * Returns a list of available power-up types.
    * 
-   * @return An array of power-up types that can be created.
+   * @returns An array of power-up types that can be created.
    */
   static getAvailableTypes(): PowerUpType[]
   {
@@ -73,7 +73,7 @@ export class PowerUpManager
    * It ensures that new power-ups do not overlap with existing ones.
    * 
    * @param occupiedPositions - An array of positions that are currently occupied by other game elements.
-   * @return An array of newly generated power-ups.
+   * @returns An array of newly generated power-ups.
    */
   generateRandomPowerUps(occupiedPositions: Position[] = []): PowerUp[]
   {
@@ -151,7 +151,7 @@ export class PowerUpManager
   /**
    * Returns all active power-ups.
    * 
-   * @return An array of currently active power-ups.
+   * @returns An array of currently active power-ups.
    */
   getActivePowerUps(): PowerUp[]
   {
@@ -180,7 +180,7 @@ export class PowerUpManager
   /**
    * Returns the current power-up configuration.
    * 
-   * @return The current power-up configuration.
+   * @returns The current power-up configuration.
    */
   private getValidPosition(occupiedPositions: Position[]): Position | null
   {

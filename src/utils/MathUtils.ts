@@ -12,7 +12,7 @@ export class MathUtils
    * 
    * @param maxWidth - The maximum width of the board.
    * @param maxHeight - The maximum height of the board.
-   * @return A random position represented as a tuple [x, y].
+   * @returns A random position represented as a tuple [x, y].
    */
   static getRandomPosition(maxWidth: number, maxHeight: number): Position
   {
@@ -26,7 +26,7 @@ export class MathUtils
    * 
    * @param pos1 - The first position as a tuple [x, y].
    * @param pos2 - The second position as a tuple [x, y].
-   * @return The Manhattan distance between the two positions.
+   * @returns The Manhattan distance between the two positions.
    */
   static manhattanDistance(pos1: Position, pos2: Position): number
   {
@@ -38,7 +38,7 @@ export class MathUtils
    * 
    * @param pos1 - The first position as a tuple [x, y].
    * @param pos2 - The second position as a tuple [x, y].
-   * @return True if the positions are equal, false otherwise.
+   * @returns True if the positions are equal, false otherwise.
    */
   static positionsEqual(pos1: Position, pos2: Position): boolean
   {
@@ -51,7 +51,7 @@ export class MathUtils
    * @param centerPos - The center position as a tuple [x, y].
    * @param targetPos - The target position as a tuple [x, y].
    * @param range - The range within which the target position should be checked.
-   * @return True if the target position is within the range of the center position, false otherwise.
+   * @returns True if the target position is within the range of the center position, false otherwise.
    */
   static isInRange(centerPos: Position, targetPos: Position, range: number): boolean
   {
@@ -68,7 +68,7 @@ export class MathUtils
    * @param position - The position to wrap as a tuple [x, y].
    * @param boardWidth - The width of the board.
    * @param boardHeight - The height of the board.
-   * @return A wrapped position as a tuple [x, y].
+   * @returns A wrapped position as a tuple [x, y].
    */
   static wrapPosition(position: Position, boardWidth: number, boardHeight: number): Position
   {
@@ -82,7 +82,7 @@ export class MathUtils
    * 
    * @param min - The minimum value (inclusive).
    * @param max - The maximum value (inclusive).
-   * @return A random integer between min and max.
+   * @returns A random integer between min and max.
    */
   static randomBetween(min: number, max: number): number
   {
@@ -93,7 +93,7 @@ export class MathUtils
    * Determines if an event should happen based on a given probability.
    * 
    * @param probability - The probability of the event occurring (0 to 1).
-   * @return True if the event should happen, false otherwise.
+   * @returns True if the event should happen, false otherwise.
    */
   static shouldHappen(probability: number): boolean
   {

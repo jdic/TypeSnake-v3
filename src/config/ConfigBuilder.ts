@@ -18,7 +18,7 @@ export class GameConfigBuilder
    * Sets the difficulty level of the game.
    * 
    * @param difficulty - The difficulty level to set, e.g., 'easy', 'medium', 'hard'.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setDifficulty(difficulty: IGameConfig['game']['difficulty']): this
   {
@@ -32,7 +32,7 @@ export class GameConfigBuilder
    * 
    * @param width - The width of the board.
    * @param height - The height of the board.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setBoardSize(width: number, height: number): this
   {
@@ -46,7 +46,7 @@ export class GameConfigBuilder
    * Sets the score awarded for each apple collected.
    * 
    * @param score - The score to set for each apple.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setScorePerApple(score: number): this
   {
@@ -59,7 +59,7 @@ export class GameConfigBuilder
    * Sets the update time for the game loop.
    * 
    * @param time - The update time in milliseconds.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setUpdateTime(time: number): this
   {
@@ -73,7 +73,7 @@ export class GameConfigBuilder
    * 
    * @param type - The type of power-up to enable or disable.
    * @param enabled - Whether to enable the power-up (default is true).
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   enablePowerUp(type: keyof IGameConfig['powerUps'], enabled: boolean = true): this
   {
@@ -87,7 +87,7 @@ export class GameConfigBuilder
    * 
    * @param type - The type of power-up to set the probability for.
    * @param probability - The probability value between 0 and 1.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setPowerUpProbability(type: keyof IGameConfig['powerUps'], probability: number): this
   {
@@ -101,7 +101,7 @@ export class GameConfigBuilder
    * 
    * @param iconType - The type of icon to set.
    * @param icon - The icon string to set.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setIcon(iconType: keyof IGameConfig['icons'], icon: string): this
   {
@@ -114,7 +114,7 @@ export class GameConfigBuilder
    * Sets the expanded range for the game.
    * 
    * @param range - The expanded range value.
-   * @return The current instance of GameConfigBuilder for method chaining.
+   * @returns The current instance of GameConfigBuilder for method chaining.
    */
   setExpandedRange(range: number): this
   {
@@ -126,7 +126,7 @@ export class GameConfigBuilder
   /**
    * Builds and returns the complete game configuration object.
    * 
-   * @return The complete game configuration as an IGameConfig object.
+   * @returns The complete game configuration as an IGameConfig object.
    */
   build(): IGameConfig
   {
@@ -137,7 +137,7 @@ export class GameConfigBuilder
    * Creates a GameConfigBuilder instance from a partial configuration object.
    * 
    * @param partialConfig - The partial configuration object to use.
-   * @return A new instance of GameConfigBuilder.
+   * @returns A new instance of GameConfigBuilder.
    */
   static fromPartialConfig(partialConfig: Partial<IGameConfig>): GameConfigBuilder
   {

@@ -21,7 +21,7 @@ export class Apple
   /**
    * Returns the current position of the Apple.
    * 
-   * @return The position of the Apple as a tuple [x, y].
+   * @returns The position of the Apple as a tuple [x, y].
    */
   getPosition(): Position
   {
@@ -59,7 +59,7 @@ export class Apple
    * Checks if the Apple is at a specific position.
    * 
    * @param position - The position to check against the Apple.
-   * @return True if the Apple is at the specified position, otherwise false.
+   * @returns True if the Apple is at the specified position, otherwise false.
    */
   isAtPosition(position: Position): boolean
   {
@@ -69,7 +69,7 @@ export class Apple
   /**
    * Generates a new random position for the Apple.
    * 
-   * @return A new position as a tuple [x, y].
+   * @returns A new position as a tuple [x, y].
    */
   private generateNewPosition(): Position
   {

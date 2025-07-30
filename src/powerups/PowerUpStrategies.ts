@@ -17,6 +17,8 @@ export class MagnetStrategy implements IPowerUpStrategy
 
   /**
    * Applies the magnet effect by setting the range to 'expanded'.
+   * 
+   * @param context - The context in which the power-up is applied.
    */
   apply(context: IPowerUpContext): void
   {
@@ -30,6 +32,8 @@ export class MagnetStrategy implements IPowerUpStrategy
 
   /**
    * Removes the magnet effect by resetting the range to 'regular'.
+   * 
+   * @param context - The context in which the power-up is applied.
    */
   remove(context: IPowerUpContext): void
   {
@@ -38,6 +42,8 @@ export class MagnetStrategy implements IPowerUpStrategy
 
   /**
    * Returns the duration of the magnet effect.
+   * 
+   * @returns The duration of the magnet effect in milliseconds.
    */
   getDuration(): number
   {
@@ -96,6 +102,8 @@ export class SlowMotionStrategy implements IPowerUpStrategy
 
   /**
    * Returns the duration of the slow motion effect.
+   * 
+   * @returns The duration of the slow motion effect in milliseconds.
    */
   getDuration(): number
   {
@@ -173,6 +181,8 @@ export class BonusStrategy implements IPowerUpStrategy
 
   /**
    * Returns the duration of the bonus effect.
+   * 
+   * @returns The duration of the bonus effect in milliseconds.
    */
   getDuration(): number
   {
@@ -180,6 +190,11 @@ export class BonusStrategy implements IPowerUpStrategy
   }
 }
 
+/**
+ * Strategy for the Invincibility power-up.
+ * This power-up grants the snake invincibility for a specified duration.
+ * While invincible, the snake cannot be harmed by collisions with itself or walls.
+ */
 export class InvincibilityStrategy implements IPowerUpStrategy
 {
   private duration: number
@@ -189,6 +204,12 @@ export class InvincibilityStrategy implements IPowerUpStrategy
     this.duration = duration
   }
 
+  /**
+   * Applies the invincibility effect by setting the snake to be invincible.
+   * It uses a timeout to remove the invincibility after the specified duration.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   apply(context: IPowerUpContext): void
   {
     context.setInvincible(true)
@@ -199,17 +220,33 @@ export class InvincibilityStrategy implements IPowerUpStrategy
     }, this.duration)
   }
 
+  /**
+   * Removes the invincibility effect by resetting the snake's invincibility status.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   remove(context: IPowerUpContext): void
   {
     context.setInvincible(false)
   }
 
+  /**
+   * Returns the duration of the invincibility effect.
+   * 
+   * @returns The duration of the invincibility effect in milliseconds.
+   */
   getDuration(): number
   {
     return this.duration
   }
 }
 
+/**
+ * Strategy for the Boost power-up.
+ * This power-up temporarily increases the game speed by reducing the update time.
+ * It applies a faster update interval for a specified duration.
+ * After the duration, it resets the update time to its original value.
+ */
 export class BoostStrategy implements IPowerUpStrategy
 {
   private duration: number
@@ -220,6 +257,12 @@ export class BoostStrategy implements IPowerUpStrategy
     this.duration = duration
   }
 
+  /**
+   * Applies the boost effect by reducing the update time.
+   * It sets a new interval to increase the game speed.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   apply(context: IPowerUpContext): void
   {
     this.originalUpdateTime = context.getUpdateTime()
@@ -235,18 +278,34 @@ export class BoostStrategy implements IPowerUpStrategy
     }, this.duration)
   }
 
+  /**
+   * Removes the boost effect by resetting the update time to its original value.
+   * It clears the interval set during the boost.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   remove(context: IPowerUpContext): void
   {
     context.clearInterval()
     context.setInterval(() => {  }, this.originalUpdateTime)
   }
 
+  /**
+   * Returns the duration of the boost effect.
+   * 
+   * @returns The duration of the boost effect in milliseconds.
+   */
   getDuration(): number
   {
     return this.duration
   }
 }
 
+/**
+ * Strategy for the Teleport power-up.
+ * This power-up allows the snake to teleport to a random position on the board.
+ * It does not have a duration, as it applies the teleport effect immediately.
+ */
 export class TeleportStrategy implements IPowerUpStrategy
 {
   constructor()
@@ -254,22 +313,45 @@ export class TeleportStrategy implements IPowerUpStrategy
 
   }
 
+  /**
+   * Applies the teleport effect by moving the snake to a random position on the board.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   apply(context: IPowerUpContext): void
   {
     context.teleportSnake()
   }
 
+  /**
+   * Removes the teleport effect.
+   * Since teleportation is instantaneous, this method does not perform any action.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   remove(context: IPowerUpContext): void
   {
 
   }
 
+  /**
+   * Returns the duration of the teleport effect.
+   * Since teleportation is instantaneous, it returns zero.
+   * 
+   * @returns The duration of the teleport effect in milliseconds.
+   */
   getDuration(): number
   {
     return 0
   }
 }
 
+/**
+ * Strategy for the Freeze power-up.
+ * This power-up temporarily freezes the game, preventing any movements or actions.
+ * It applies a freeze effect for a specified duration.
+ * After the duration, it unfreezes the game.
+ */
 export class FreezeStrategy implements IPowerUpStrategy
 {
   private duration: number
@@ -279,6 +361,12 @@ export class FreezeStrategy implements IPowerUpStrategy
     this.duration = duration
   }
 
+  /**
+   * Applies the freeze effect by setting the game to a frozen state.
+   * It uses a timeout to unfreeze the game after the specified duration.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   apply(context: IPowerUpContext): void
   {
     context.setGameFrozen(true)
@@ -289,11 +377,21 @@ export class FreezeStrategy implements IPowerUpStrategy
     }, this.duration)
   }
 
+  /**
+   * Removes the freeze effect by unfreezing the game.
+   * 
+   * @param context - The context in which the power-up is applied.
+   */
   remove(context: IPowerUpContext): void
   {
     context.setGameFrozen(false)
   }
 
+  /**
+   * Returns the duration of the freeze effect.
+   * 
+   * @returns The duration of the freeze effect in milliseconds.
+   */
   getDuration(): number
   {
     return this.duration

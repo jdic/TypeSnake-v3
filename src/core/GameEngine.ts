@@ -351,6 +351,11 @@ export class GameEngine implements IPowerUpContext
     this.renderService.render(this.gameStateService.getState())
   }
 
+  /**
+   * Calculates the update time for the game loop.
+   * 
+   * @returns The update time in milliseconds.
+   */
   private calculateUpdateTime(): number
   {
     if (this.config.game.difficulty !== 'custom')
@@ -361,16 +366,30 @@ export class GameEngine implements IPowerUpContext
     return this.config.game.updateTime || DEFAULT_SPEEDS.easy
   }
 
+  /**
+   * Sets the range for the game.
+   * 
+   * @param range - The range to set, either 'regular' or 'expanded'.
+   */
   setInvincible(invincible: boolean): void
   {
     this.invincibilityActive = invincible
   }
 
+  /**
+   * Checks if the snake is currently invincible.
+   * 
+   * @returns True if the snake is invincible, false otherwise.
+   */
   isInvincible(): boolean
   {
     return this.invincibilityActive
   }
 
+  /**
+   * Teleports the snake to a random position on the board.
+   * It ensures that the new position does not overlap with any occupied positions.
+   */
   teleportSnake(): void
   {
     const segments = this.snake.getSegments()
@@ -401,16 +420,32 @@ export class GameEngine implements IPowerUpContext
     this.snake.teleportTo(newPosition)
   }
 
+  /**
+   * Sets the game to a frozen state.
+   * This prevents any movements or actions in the game.
+   * 
+   * @param frozen - If true, the game will be frozen.
+   */
   setGameFrozen(frozen: boolean): void
   {
     this.gameFrozen = frozen
   }
 
+  /**
+   * Checks if the game is currently frozen.
+   * 
+   * @returns True if the game is frozen, false otherwise.
+   */
   isGameFrozen(): boolean
   {
     return this.gameFrozen
   }
 
+  /**
+   * Returns the current board dimensions.
+   * 
+   * @returns An object containing the width and height of the board.
+   */
   getBoardDimensions(): { width: number, height: number }
   {
       return {

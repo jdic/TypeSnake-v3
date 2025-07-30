@@ -23,7 +23,7 @@ export class Snake
   /**
    * Returns the current position of the Snake's head.
    * 
-   * @return The position of the Snake's head as a tuple [x, y].
+   * @returns The position of the Snake's head as a tuple [x, y].
    */
   getHead(): Position
   {
@@ -33,7 +33,7 @@ export class Snake
   /**
    * Returns the current segments of the Snake.
    * 
-   * @return An array of positions representing the Snake's segments.
+   * @returns An array of positions representing the Snake's segments.
    */
   getSegments(): Position[]
   {
@@ -43,7 +43,7 @@ export class Snake
   /**
    * Returns the current direction of the Snake.
    * 
-   * @return The direction of the Snake as a tuple [dx, dy].
+   * @returns The direction of the Snake as a tuple [dx, dy].
    */
   getDirection(): Direction
   {
@@ -75,7 +75,7 @@ export class Snake
    * Moves the Snake in its current direction.
    * It adds a new head segment and removes the tail segment.
    * 
-   * @return The position of the removed tail segment as a tuple [x, y].
+   * @returns The position of the removed tail segment as a tuple [x, y].
    */
   move(): Position
   {
@@ -108,7 +108,7 @@ export class Snake
   /**
    * Checks if the Snake has collided with itself.
    * 
-   * @return True if the Snake has collided with itself, false otherwise.
+   * @returns True if the Snake has collided with itself, false otherwise.
    */
   checkSelfCollision(): boolean
   {
@@ -124,7 +124,7 @@ export class Snake
    * Checks if the Snake occupies a specific position.
    * 
    * @param position - The position to check as a tuple [x, y].
-   * @return True if the Snake occupies the specified position, false otherwise.
+   * @returns True if the Snake occupies the specified position, false otherwise.
    */
   occupiesPosition(position: Position): boolean
   {
@@ -137,7 +137,7 @@ export class Snake
   /**
    * Returns the length of the Snake.
    * 
-   * @return The number of segments in the Snake.
+   * @returns The number of segments in the Snake.
    */
   getLength(): number
   {
@@ -155,6 +155,12 @@ export class Snake
     this.direction = [0, -1]
   }
 
+  /**
+   * Teleports the Snake to a new position.
+   * It adjusts the segments based on the new head position while maintaining the relative positions.
+   * 
+   * @param newPosition - The new position to teleport the Snake's head to as a tuple [x, y].
+   */
   teleportTo(newPosition: Position): void
   {
     if (this.segments.length === 0)

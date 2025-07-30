@@ -21,6 +21,8 @@ export class GameStateService
    * 
    * This method provides a snapshot of the game's current status, including
    * the snake's position, apple's position, score, and power-ups.
+   * 
+   * @returns The current game state as an IGameState object.
    */
   getState(): IGameState
   {
@@ -104,6 +106,8 @@ export class GameStateService
   /**
    * Checks if the game is over.
    * Returns true if the game is marked as over, otherwise false.
+   * 
+   * @returns True if the game is over, false otherwise.
    */
   isGameOver(): boolean
   {
@@ -113,6 +117,8 @@ export class GameStateService
   /**
    * Checks if the game is paused.
    * Returns true if the game is currently paused, otherwise false.
+   * 
+   * @returns True if the game is paused, false otherwise.
    */
   isPaused(): boolean
   {
@@ -142,6 +148,8 @@ export class GameStateService
   /**
    * Clones the current game state.
    * This method creates a deep copy of the current state, allowing for state snapshots.
+   * 
+   * @returns A deep copy of the current game state.
    */
   clone(): IGameState
   {

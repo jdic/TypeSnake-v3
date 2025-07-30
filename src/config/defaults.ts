@@ -1,5 +1,8 @@
 import type { IGameConfig, ISpeedConfig } from '@type/global'
 
+/**
+ * Default configuration for the game.
+ */
 export const DEFAULT_SPEEDS: ISpeedConfig =
 {
   easy: 1000,
@@ -7,6 +10,9 @@ export const DEFAULT_SPEEDS: ISpeedConfig =
   high: 70
 }
 
+/**
+ * Default game configuration.
+ */
 export const DEFAULT_CONFIG: IGameConfig =
 {
   board:
