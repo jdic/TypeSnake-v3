@@ -1,4 +1,4 @@
-import { BonusStrategy, MagnetStrategy, SlowMotionStrategy } from '@powerups/PowerUpStrategies'
+import { BonusStrategy, InvincibilityStrategy, MagnetStrategy, SlowMotionStrategy } from '@powerups/PowerUpStrategies'
 import type { PowerUpType, Position, IPowerUpConfig, IPowerUpSettings } from '@type/global'
 import { PowerUp, type IPowerUpStrategy } from '@powerups/PowerUp'
 import { MathUtils } from '@utils/MathUtils'
@@ -18,6 +18,7 @@ export class PowerUpFactory
     magnet: (duration) => new MagnetStrategy(duration),
     slowMotion: (duration) => new SlowMotionStrategy(duration),
     bonus: (duration) => new BonusStrategy(duration),
+    invincibility: (duration) => new InvincibilityStrategy(duration)
   }
 
   /**

@@ -33,6 +33,8 @@ export class GameEngine implements IPowerUpContext
   private currentScorePerApple: number
   private currentUpdateTime: number
 
+  private invincibilityActive: boolean = false
+
   constructor(config?: Partial<IGameConfig>)
   {
     this.config = config
@@ -212,10 +214,14 @@ export class GameEngine implements IPowerUpContext
 
     const tailPosition = this.snake.move()
 
-    if (this.snake.checkSelfCollision())
+    if (!this.invincibilityActive)
     {
-      this.gameOver()
-      return
+      if (this.snake.checkSelfCollision())
+      {
+        this.gameOver()
+
+        return
+      }
     }
 
     const head = this.snake.getHead()
@@ -305,7 +311,7 @@ export class GameEngine implements IPowerUpContext
     {
       return MathUtils.positionsEqual(pos1, pos2)
     }
-    
+
     else
     {
       return MathUtils.isInRange(pos1, pos2, this.config.game.expandedRange)
@@ -345,6 +351,16 @@ export class GameEngine implements IPowerUpContext
     }
 
     return this.config.game.updateTime || DEFAULT_SPEEDS.easy
+  }
+
+  setInvincible(invincible: boolean): void
+  {
+    this.invincibilityActive = invincible
+  }
+
+  isInvincible(): boolean
+  {
+    return this.invincibilityActive
   }
 
   // START Implementation of IPowerUpContext methods

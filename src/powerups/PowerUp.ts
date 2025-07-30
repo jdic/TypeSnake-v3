@@ -3,7 +3,6 @@ import type { Position, PowerUpType, Range } from '@type/global'
 export interface IPowerUpContext
 {
   setRange(range: Range): void
-  getUpdateTime(): number
 
   setUpdateTime(time: number): void
   getUpdateTime(): number
@@ -13,6 +12,9 @@ export interface IPowerUpContext
 
   setScorePerApple(score: number): void
   getScorePerApple(): number
+
+  setInvincible(invincible: boolean): void
+  isInvincible(): boolean
 
   redraw(): void
   clearInterval(): void

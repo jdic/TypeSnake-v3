@@ -39,6 +39,12 @@ export const DEFAULT_CONFIG: IGameConfig =
       enabled: false,
       probability: 0.5,
       duration: 2000
+    },
+    invincibility:
+    {
+      enabled: false,
+      probability: 0.15,
+      duration: 3000
     }
   },
   icons:
@@ -48,6 +54,7 @@ export const DEFAULT_CONFIG: IGameConfig =
     apple: '🍎',
     magnet: '🧲',
     slowMotion: '🧊',
-    bonus: '🍐'
+    bonus: '🍐',
+    invincibility: '👻'
   }
 }

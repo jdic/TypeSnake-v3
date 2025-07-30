@@ -179,3 +179,33 @@ export class BonusStrategy implements IPowerUpStrategy
     return this.duration
   }
 }
+
+export class InvincibilityStrategy implements IPowerUpStrategy
+{
+  private duration: number
+
+  constructor(duration: number = 3000)
+  {
+    this.duration = duration
+  }
+
+  apply(context: IPowerUpContext): void
+  {
+    context.setInvincible(true)
+    
+    setTimeout(() =>
+    {
+      this.remove(context)
+    }, this.duration)
+  }
+
+  remove(context: IPowerUpContext): void
+  {
+    context.setInvincible(false)
+  }
+
+  getDuration(): number
+  {
+    return this.duration
+  }
+}
