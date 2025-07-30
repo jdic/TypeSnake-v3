@@ -19,7 +19,7 @@ export class PowerUpFactory
     slowMotion: (duration) => new SlowMotionStrategy(duration),
     bonus: (duration) => new BonusStrategy(duration),
     invincibility: (duration) => new InvincibilityStrategy(duration),
-    teleport: (duration) => new TeleportStrategy(),
+    teleport: () => new TeleportStrategy(),
     boost: (duration) => new BoostStrategy(duration),
     freeze: (duration) => new FreezeStrategy(duration)
   }

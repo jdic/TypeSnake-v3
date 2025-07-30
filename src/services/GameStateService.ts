@@ -1,4 +1,4 @@
-import type { IGameState, Position } from '@type/global'
+import type { IGameState, IPowerUp, Position } from '@type/global'
 
 /**
  * GameStateService manages the state of the game, including
@@ -77,7 +77,7 @@ export class GameStateService
    * 
    * @param powerUps - An array of power-ups to set in the game state.
    */
-  updatePowerUps(powerUps: any[]): void
+  updatePowerUps(powerUps: IPowerUp[]): void
   {
     this.state.powerUps = [...powerUps]
   }

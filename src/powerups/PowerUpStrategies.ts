@@ -61,7 +61,7 @@ export class SlowMotionStrategy implements IPowerUpStrategy
 {
   private duration: number
   private originalUpdateTime: number = 0
-  private intervalId: any = null
+  private intervalId: Timer | null  = null
 
   constructor(duration: number = 2000)
   {
@@ -125,7 +125,7 @@ export class BonusStrategy implements IPowerUpStrategy
   private duration: number
   private originalBackgroundIcon: string = ''
   private originalScorePerApple: number = 0
-  private intervalId: any = null
+  private intervalId: Timer | null = null
 
   constructor(duration: number = 2000)
   {
@@ -329,7 +329,7 @@ export class TeleportStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  remove(context: IPowerUpContext): void
+  remove(): void
   {
 
   }

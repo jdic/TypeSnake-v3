@@ -249,7 +249,10 @@ export class GameEngine implements IPowerUpContext
       hasEaten = true
     }
 
-    if (!hasEaten) {  }
+    if (!hasEaten)
+    {
+      // Nothing
+    }
 
     this.updateGameState()
     this.render()
