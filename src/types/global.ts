@@ -81,6 +81,7 @@ export interface IGameState
   powerUps: IPowerUp[]
   isGameOver: boolean
   isPaused: boolean
+  activePowerUps: PowerUpType[]
 }
 
 export interface ISpeedConfig

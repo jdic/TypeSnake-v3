@@ -70,7 +70,8 @@ export class GameEngine implements IPowerUpContext
       score: 0,
       powerUps: [],
       isGameOver: false,
-      isPaused: false
+      isPaused: false,
+      activePowerUps: []
     }
 
     this.gameStateService = new GameStateService(initialState)
@@ -284,7 +285,7 @@ export class GameEngine implements IPowerUpContext
   }
 
   /**
-   * Eats a power-up and applies its effect.
+   * Eats a power-up and applies its effects and adds/removes active power-up status.
    * 
    * @param powerUp - The power-up to be consumed.
    * @param tailPosition - The position of the snake's tail.
@@ -293,7 +294,16 @@ export class GameEngine implements IPowerUpContext
   {
     this.snake.grow(tailPosition)
 
+    this.gameStateService.addActivePowerUp(powerUp.type)
+
     powerUp.apply(this)
+
+    const duration = powerUp.getDuration()
+
+    setTimeout(() =>
+    {
+      this.gameStateService.removeActivePowerUp(powerUp.type)
+    }, duration)
 
     this.powerUpManager.removePowerUp(powerUp.type)
   }

@@ -1,4 +1,4 @@
-import type { IGameState, IPowerUp, Position } from '@type/global'
+import type { IGameState, IPowerUp, Position, PowerUpType } from '@type/global'
 
 /**
  * GameStateService manages the state of the game, including
@@ -83,6 +83,47 @@ export class GameStateService
   }
 
   /**
+   * Updates the active power-ups in the game state.
+   * This method replaces the current list of active power-ups with a new one.
+   * 
+   * @param activePowerUps - An array of active power-up types to set in the game state.
+   */
+  updateActivePowerUps(activePowerUps: PowerUpType[])
+  {
+    this.state.activePowerUps = [...activePowerUps]
+  }
+
+  /**
+   * Adds a new active power-up to the game state.
+   * This method ensures that the power-up type is not already active.
+   * 
+   * @param powerUpType - The type of power-up to add as active.
+   */
+  addActivePowerUp(powerUpType: PowerUpType): void
+  {
+    if (!this.state.activePowerUps.includes(powerUpType))
+    {
+      this.state.activePowerUps.push(powerUpType)
+    }
+  }
+
+  /**
+   * Removes an active power-up from the game state.
+   * This method will remove the specified power-up type if it exists in the active list.
+   * 
+   * @param powerUpType - The type of power-up to remove from active status.
+   */
+  removeActivePowerUp(powerUpType: PowerUpType): void
+  {
+    const index = this.state.activePowerUps.indexOf(powerUpType)
+
+    if (index > -1)
+    {
+      this.state.activePowerUps.splice(index, 1)
+    }
+  }
+
+  /**
    * Sets the game over state.
    * This method marks the game as over and can also pause the game.
    * 
@@ -141,6 +182,7 @@ export class GameStateService
       powerUps: [],
       isGameOver: false,
       isPaused: false,
+      activePowerUps: [],
       ...initialState,
     }
   }

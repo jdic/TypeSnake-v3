@@ -1,4 +1,4 @@
-import type { IBoardConfig, IGameState, IIconsConfig, Position } from '@type/global'
+import type { IBoardConfig, IGameState, IIconsConfig, Position, PowerUpType } from '@type/global'
 
 /**
  * RenderService is responsible for rendering the game state to the console.
@@ -128,26 +128,26 @@ export class RenderService
   }
 
   /**
-   * Draws the UI elements such as score, length, and game status.
-   * It displays the current score, length of the snake, and game status (game over or paused).
+   * Draws the UI elements such as score, snake length, and active power-ups.
+   * It formats the display to fit within the board's width and updates dynamically.
    * 
-   * @param gameState - The current state of the game to render the UI.
+   * @param gameState - The current state of the game to render in the UI.
    */
   private drawUI(gameState: IGameState): void
   {
-    console.log(`Score: ${gameState.score}`)
-    console.log(`Length: ${gameState.snake.length}`)
+    const text = `🏆 ${gameState.score} - 📏 ${gameState.snake.length}`
+    const activepowerUpsIcons = this.getActivePowerUpsDisplay(gameState.activePowerUps)
 
-    if (gameState.isGameOver)
-    {
-      console.log('\nGAME OVER')
-      console.log('Press Ctrl+C to exit')
-    }
+    const totalWidth = this.board.width * 2
+    const rightMargin = activepowerUpsIcons.length
+    const availableSpace = totalWidth - text.length - rightMargin
+    const spacing = Math.max(1, availableSpace)
 
-    if (gameState.isPaused)
-    {
-      console.log('\nPAUSED')
-    }
+    const bottomLine = text + ' '.repeat(spacing) + activepowerUpsIcons
+
+    process.stdout.write(`\n${bottomLine}\n`)
+
+    this.drawGamesStatusMessages(gameState)
   }
 
   /**
@@ -168,5 +168,61 @@ export class RenderService
     })
 
     this.drawUI(gameState)
+  }
+
+  /**
+   * Returns a string representation of the active power-ups for display.
+   * It maps the active power-up types to their corresponding icons.
+   * 
+   * @param activePowerUps - An array of active power-up types.
+   * @returns A string of icons representing the active power-ups.
+   */
+  private getActivePowerUpsDisplay(activePowerUps: PowerUpType[]): string
+  {
+    if (activePowerUps.length === 0)
+    {
+      return ''
+    }
+
+    return activePowerUps
+      .map((powerUpType) => this.icons[powerUpType])
+      .join(' ')
+  }
+
+  /**
+   * Draws the game status messages based on the current game state.
+   * It displays messages for game over, pause, and other relevant status updates.
+   * 
+   * @param gameState - The current state of the game.
+   */
+  private drawGamesStatusMessages(gameState: IGameState): void
+  {
+    const messages: string[] = []
+
+    if (gameState.isGameOver)
+    {
+      messages.push('GAME OVER')
+      messages.push('Press Ctrl+C to quit')
+    }
+
+    else if (gameState.isPaused)
+    {
+      messages.push('PAUSED')
+    }
+
+    const boardWidth = this.board.width * 2
+
+    messages.forEach((message) =>
+    {
+      const padding = Math.max(0, Math.floor((boardWidth - message.length) / 2))
+      const centeredMessage = ' '.repeat(padding) + message
+
+      process.stdout.write(`\n${centeredMessage}`)
+    })
+
+    if (messages.length > 0)
+    {
+      process.stdout.write('\n')
+    }
   }
 }
