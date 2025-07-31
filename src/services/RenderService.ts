@@ -50,6 +50,18 @@ export class RenderService
   }
 
   /**
+   * Forces a complete re-render by clearing the previous frame.
+   * This ensures the next render will be displayed regardless of frame comparison.
+   * 
+   * @param gameState - The current state of the game to render.
+   */
+  forceRender(gameState: IGameState): void
+  {
+    this.previousFrame = ''
+    this.render(gameState)
+  }
+
+  /**
    * Updates the icons used for rendering the game.
    * It merges the new icons with the existing ones.
    * 
@@ -238,35 +250,43 @@ export class RenderService
    */
   private buildGameStatusMessages(gameState: IGameState): string
   {
-    const messages: string[] = []
+    const boardWidth = this.board.width * 2
+    let statusString = ''
+
+    const getPadding = (length: number): number =>
+    {
+      return Math.max(0, Math.floor((boardWidth - length) / 2))
+    }
 
     if (gameState.isGameOver)
     {
-      messages.push('GAME OVER')
-      messages.push('Press Ctrl+C to quit')
+      const gameOverMessage = 'GAME OVER'
+      const quitMessage = 'Press Ctrl+C to quit'
+
+      const gameOverPadding = getPadding(gameOverMessage.length)
+      const quitPadding = getPadding(quitMessage.length)
+
+      statusString += '\n' + ' '.repeat(gameOverPadding) + gameOverMessage
+      statusString += '\n' + ' '.repeat(quitPadding) + quitMessage
     }
 
     else if (gameState.isPaused)
     {
-      messages.push('PAUSED')
+      const pausedMessage = 'PAUSED'
+      const padding = getPadding(pausedMessage.length)
+
+      statusString += '\n' + ' '.repeat(padding) + pausedMessage
+      statusString += '\n' + ' '.repeat(boardWidth)
     }
 
-    if (messages.length === 0)
+    else
     {
-      return ''
+      statusString += '\n' + ' '.repeat(boardWidth)
+      statusString += '\n' + ' '.repeat(boardWidth)
     }
-
-    const boardWidth = this.board.width * 2
-    let statusString = ''
-
-    messages.forEach((message) =>
-    {
-      const padding = Math.max(0, Math.floor((boardWidth - message.length) / 2))
-      const centeredMessage = ' '.repeat(padding) + message
-      statusString += `\n${centeredMessage}`
-    })
 
     statusString += '\n'
+
     return statusString
   }
 }

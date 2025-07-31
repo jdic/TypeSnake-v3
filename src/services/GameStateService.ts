@@ -125,7 +125,7 @@ export class GameStateService
 
   /**
    * Sets the game over state.
-   * This method marks the game as over and can also pause the game.
+   * This method marks the game as over.
    * 
    * @param isGameOver - If true, the game will be marked as over.
    */

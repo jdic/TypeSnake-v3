@@ -116,7 +116,22 @@ export class GameEngine implements IPowerUpContext
       this.stopGameLoop()
     }
     
-    this.render()
+    this.forceRender()
+  }
+
+  /**
+   * Forces a complete re-render of the current game state.
+   */
+  forceRender(): void
+  {
+    const currentIcons =
+    {
+      ...this.config.icons,
+      background: this.currentBackgroundIcon
+    }
+
+    this.renderService.updateIcons(currentIcons)
+    this.renderService.forceRender(this.gameStateService.getState())
   }
 
   /**
