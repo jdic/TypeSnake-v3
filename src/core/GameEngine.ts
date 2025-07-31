@@ -28,6 +28,8 @@ export class GameEngine implements IPowerUpContext
   private gameStateService: GameStateService
   
   private gameInterval: Timer | null = null
+  private blinkInterval: Timer | null = null
+
   private range: Range = 'regular'
   private currentBackgroundIcon: string
   private currentScorePerApple: number
@@ -120,21 +122,6 @@ export class GameEngine implements IPowerUpContext
   }
 
   /**
-   * Forces a complete re-render of the current game state.
-   */
-  forceRender(): void
-  {
-    const currentIcons =
-    {
-      ...this.config.icons,
-      background: this.currentBackgroundIcon
-    }
-
-    this.renderService.updateIcons(currentIcons)
-    this.renderService.forceRender(this.gameStateService.getState())
-  }
-
-  /**
    * Restarts the game.
    */
   restart(): void
@@ -168,6 +155,7 @@ export class GameEngine implements IPowerUpContext
   stop(): void
   {
     this.stopGameLoop()
+    this.stopBlinkInterval()
     this.inputService.destroy()
   }
 
@@ -209,6 +197,8 @@ export class GameEngine implements IPowerUpContext
     {
       this.update()
     }, this.currentUpdateTime)
+
+    this.startBlinkInterval()
   }
 
   /**
@@ -221,6 +211,51 @@ export class GameEngine implements IPowerUpContext
       clearInterval(this.gameInterval)
 
       this.gameInterval = null
+    }
+
+    this.stopBlinkInterval()
+  }
+
+  /**
+   * Starts the bink interval for power-up indicators.
+   */
+  private startBlinkInterval(): void
+  {
+    if (this.blinkInterval)
+    {
+      return
+    }
+
+    this.blinkInterval = setInterval(() =>
+    {
+      const currentState = this.gameStateService.getState()
+      const currentTime = Date.now()
+
+      const hasBlinkingPowerUps = currentState.activePowerUps.some((powerUp) =>
+      {
+        const elapsedTime = currentTime - powerUp.startTime
+        const remainingTime = powerUp.duration - elapsedTime
+        const blinkThreshold = powerUp.duration * 0.25
+
+        return remainingTime <= blinkThreshold && remainingTime > 0
+      })
+
+      if (hasBlinkingPowerUps)
+      {
+        this.render()
+      }
+    }, 200)
+  }
+
+  /**
+   * Stops the blink interval.
+   */
+  private stopBlinkInterval(): void
+  {
+    if (this.blinkInterval)
+    {
+      clearInterval(this.blinkInterval)
+      this.blinkInterval = null
     }
   }
 
@@ -314,11 +349,11 @@ export class GameEngine implements IPowerUpContext
   {
     this.snake.grow(tailPosition)
 
-    this.gameStateService.addActivePowerUp(powerUp.type)
+    const duration = powerUp.getDuration()
+
+    this.gameStateService.addActivePowerUp(powerUp.type, duration)
 
     powerUp.apply(this)
-
-    const duration = powerUp.getDuration()
 
     setTimeout(() =>
     {
@@ -382,6 +417,21 @@ export class GameEngine implements IPowerUpContext
 
     this.renderService.updateIcons(currentIcons)
     this.renderService.render(this.gameStateService.getState())
+  }
+
+  /**
+   * Forces a complete re-render of the current game state.
+   */
+  forceRender(): void
+  {
+    const currentIcons =
+    {
+      ...this.config.icons,
+      background: this.currentBackgroundIcon
+    }
+
+    this.renderService.updateIcons(currentIcons)
+    this.renderService.forceRender(this.gameStateService.getState())
   }
 
   /**

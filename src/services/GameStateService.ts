@@ -1,4 +1,4 @@
-import type { IGameState, IPowerUp, Position, PowerUpType } from '@type/global'
+import type { IActivePowerUp, IGameState, IPowerUp, Position, PowerUpType } from '@type/global'
 
 /**
  * GameStateService manages the state of the game, including
@@ -86,9 +86,9 @@ export class GameStateService
    * Updates the active power-ups in the game state.
    * This method replaces the current list of active power-ups with a new one.
    * 
-   * @param activePowerUps - An array of active power-up types to set in the game state.
+   * @param activePowerUps - An array of active power-ups to set in the game state.
    */
-  updateActivePowerUps(activePowerUps: PowerUpType[])
+  updateActivePowerUps(activePowerUps: IActivePowerUp[]): void
   {
     this.state.activePowerUps = [...activePowerUps]
   }
@@ -98,13 +98,17 @@ export class GameStateService
    * This method ensures that the power-up type is not already active.
    * 
    * @param powerUpType - The type of power-up to add as active.
+   * @param duration - The duration of the power-up in milliseconds.
    */
-  addActivePowerUp(powerUpType: PowerUpType): void
+  addActivePowerUp(powerUpType: PowerUpType, duration: number): void
   {
-    if (!this.state.activePowerUps.includes(powerUpType))
-    {
-      this.state.activePowerUps.push(powerUpType)
-    }
+    this.removeActivePowerUp(powerUpType)
+
+    this.state.activePowerUps.push({
+      type: powerUpType,
+      startTime: Date.now(),
+      duration: duration
+    })
   }
 
   /**
@@ -115,7 +119,7 @@ export class GameStateService
    */
   removeActivePowerUp(powerUpType: PowerUpType): void
   {
-    const index = this.state.activePowerUps.indexOf(powerUpType)
+    const index = this.state.activePowerUps.findIndex((p) => p.type === powerUpType)
 
     if (index > -1)
     {

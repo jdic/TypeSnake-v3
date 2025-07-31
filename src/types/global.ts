@@ -73,6 +73,13 @@ export interface IPowerUp
   createdAt: number
 }
 
+export interface IActivePowerUp
+{
+  type: PowerUpType
+  startTime: number
+  duration: number
+}
+
 export interface IGameState
 {
   snake: Position[]
@@ -81,7 +88,7 @@ export interface IGameState
   powerUps: IPowerUp[]
   isGameOver: boolean
   isPaused: boolean
-  activePowerUps: PowerUpType[]
+  activePowerUps: IActivePowerUp[]
 }
 
 export interface ISpeedConfig

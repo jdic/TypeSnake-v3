@@ -1,4 +1,4 @@
-import type { IBoardConfig, IGameState, IIconsConfig, Position, PowerUpType } from '@type/global'
+import type { IActivePowerUp, IBoardConfig, IGameState, IIconsConfig, Position } from '@type/global'
 
 /**
  * RenderService is responsible for rendering the game state to the console.
@@ -58,6 +58,8 @@ export class RenderService
   forceRender(gameState: IGameState): void
   {
     this.previousFrame = ''
+    this.clearScreen()
+    this.isFirstRender = true
     this.render(gameState)
   }
 
@@ -225,19 +227,36 @@ export class RenderService
 
   /**
    * Builds the active power-ups display as a string.
+   * Power-ups that are about to expire will blink.
    * 
-   * @param activePowerUps - Array of active power-up types.
+   * @param activePowerUps - Array of active power-ups with timing information.
    * @returns String of power-up icons.
    */
-  private getActivePowerUpsDisplay(activePowerUps: PowerUpType[]): string
+  private getActivePowerUpsDisplay(activePowerUps: IActivePowerUp[]): string
   {
     if (activePowerUps.length === 0)
     {
       return ''
     }
 
+    const currentTime = Date.now()
+
     return activePowerUps
-      .map((powerUpType) => this.icons[powerUpType])
+      .map((activePowerUp) =>
+      {
+        const elapsedTime = currentTime - activePowerUp.startTime
+        const remainingTime = activePowerUp.duration - elapsedTime
+        const blinkThreshold = activePowerUp.duration * 0.25
+
+        if (remainingTime <= blinkThreshold && remainingTime > 0)
+        {
+          const shouldShow = Math.floor(currentTime / 1000) % 2 === 0
+          
+          return shouldShow ? this.icons[activePowerUp.type] : ' '
+        }
+
+        return this.icons[activePowerUp.type]
+      })
       .join(' ')
   }
 
