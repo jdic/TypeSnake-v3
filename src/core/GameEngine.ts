@@ -351,14 +351,17 @@ export class GameEngine implements IPowerUpContext
 
     const duration = powerUp.getDuration()
 
-    this.gameStateService.addActivePowerUp(powerUp.type, duration)
+    if (duration > 0)
+    {
+      this.gameStateService.addActivePowerUp(powerUp.type, duration)
+
+      setTimeout(() =>
+      {
+        this.gameStateService.removeActivePowerUp(powerUp.type)
+      }, duration)
+    }
 
     powerUp.apply(this)
-
-    setTimeout(() =>
-    {
-      this.gameStateService.removeActivePowerUp(powerUp.type)
-    }, duration)
 
     this.powerUpManager.removePowerUp(powerUp.type)
   }
