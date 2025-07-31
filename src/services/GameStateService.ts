@@ -127,11 +127,11 @@ export class GameStateService
    * Sets the game over state.
    * This method marks the game as over and can also pause the game.
    * 
-   * @param isPaused - If true, the game will be paused instead of marked as over.
+   * @param isGameOver - If true, the game will be marked as over.
    */
-  setGameOver(isPaused: boolean): void
+  setGameOver(isGameOver: boolean): void
   {
-    this.state.isPaused = isPaused
+    this.state.isGameOver = isGameOver
   }
 
   /**

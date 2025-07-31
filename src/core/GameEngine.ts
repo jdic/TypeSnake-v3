@@ -99,6 +99,11 @@ export class GameEngine implements IPowerUpContext
   {
     const currentState = this.gameStateService.getState()
 
+    if (currentState.isGameOver)
+    {
+      return
+    }
+
     this.gameStateService.setPaused(!currentState.isPaused)
     
     if (currentState.isPaused)
