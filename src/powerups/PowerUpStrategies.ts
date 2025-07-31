@@ -9,6 +9,7 @@ import type { IPowerUpContext, IPowerUpStrategy } from '@powerups/PowerUp'
 export class MagnetStrategy implements IPowerUpStrategy
 {
   private duration: number
+  private timeoutId: Timer | null = null
 
   constructor(duration: number = 2000)
   {
@@ -24,7 +25,7 @@ export class MagnetStrategy implements IPowerUpStrategy
   {
     context.setRange('expanded')
 
-    setTimeout(() =>
+    this.timeoutId = setTimeout(() =>
     {
       this.remove(context)
     }, this.duration)
@@ -37,6 +38,12 @@ export class MagnetStrategy implements IPowerUpStrategy
    */
   remove(context: IPowerUpContext): void
   {
+    if (this.timeoutId)
+    {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     context.setRange('regular')
   }
 
@@ -61,7 +68,7 @@ export class SlowMotionStrategy implements IPowerUpStrategy
 {
   private duration: number
   private originalUpdateTime: number = 0
-  private intervalId: Timer | null  = null
+  private timeoutId: Timer | null  = null
 
   constructor(duration: number = 2000)
   {
@@ -83,7 +90,7 @@ export class SlowMotionStrategy implements IPowerUpStrategy
     context.clearInterval()
     context.setInterval(() => {}, newUpdateTime)
     
-    setTimeout(() =>
+    this.timeoutId = setTimeout(() =>
     {
       this.remove(context)
     }, this.duration)
@@ -96,6 +103,12 @@ export class SlowMotionStrategy implements IPowerUpStrategy
    */
   remove(context: IPowerUpContext)
   {
+    if (this.timeoutId)
+    {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     context.clearInterval()
     context.setInterval(() => {}, this.originalUpdateTime)
   }
@@ -126,6 +139,7 @@ export class BonusStrategy implements IPowerUpStrategy
   private originalBackgroundIcon: string = ''
   private originalScorePerApple: number = 0
   private intervalId: Timer | null = null
+  private timeoutId: Timer | null = null
 
   constructor(duration: number = 2000)
   {
@@ -154,7 +168,7 @@ export class BonusStrategy implements IPowerUpStrategy
       context.redraw()
     }, context.getUpdateTime())
 
-    setTimeout(() =>
+    this.timeoutId = setTimeout(() =>
     {
       this.remove(context)
     }, this.duration)
@@ -172,6 +186,12 @@ export class BonusStrategy implements IPowerUpStrategy
     {
       clearInterval(this.intervalId)
       this.intervalId = null
+    }
+
+    if (this.timeoutId)
+    {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
     }
 
     context.setBackgroundIcon(this.originalBackgroundIcon)
@@ -198,6 +218,7 @@ export class BonusStrategy implements IPowerUpStrategy
 export class InvincibilityStrategy implements IPowerUpStrategy
 {
   private duration: number
+  private timeoutId: Timer | null = null
 
   constructor(duration: number = 3000)
   {
@@ -214,7 +235,7 @@ export class InvincibilityStrategy implements IPowerUpStrategy
   {
     context.setInvincible(true)
     
-    setTimeout(() =>
+    this.timeoutId = setTimeout(() =>
     {
       this.remove(context)
     }, this.duration)
@@ -227,6 +248,12 @@ export class InvincibilityStrategy implements IPowerUpStrategy
    */
   remove(context: IPowerUpContext): void
   {
+    if (this.timeoutId)
+    {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     context.setInvincible(false)
   }
 
@@ -251,6 +278,7 @@ export class BoostStrategy implements IPowerUpStrategy
 {
   private duration: number
   private originalUpdateTime: number = 0
+  private timeoutId: Timer | null = null
 
   constructor(duration: number = 2000)
   {
@@ -272,7 +300,7 @@ export class BoostStrategy implements IPowerUpStrategy
     context.clearInterval()
     context.setInterval(() => {  }, newUpdateTime)
 
-    setTimeout(() =>
+    this.timeoutId = setTimeout(() =>
     {
       this.remove(context)
     }, this.duration)
@@ -286,6 +314,12 @@ export class BoostStrategy implements IPowerUpStrategy
    */
   remove(context: IPowerUpContext): void
   {
+    if (this.timeoutId)
+    {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     context.clearInterval()
     context.setInterval(() => {  }, this.originalUpdateTime)
   }
@@ -355,6 +389,7 @@ export class TeleportStrategy implements IPowerUpStrategy
 export class FreezeStrategy implements IPowerUpStrategy
 {
   private duration: number
+  private timeoutId: Timer | null = null
 
   constructor(duration: number = 1500)
   {
@@ -371,7 +406,7 @@ export class FreezeStrategy implements IPowerUpStrategy
   {
     context.setGameFrozen(true)
 
-    setTimeout(() =>
+    this.timeoutId = setTimeout(() =>
     {
       this.remove(context)
     }, this.duration)
@@ -384,6 +419,12 @@ export class FreezeStrategy implements IPowerUpStrategy
    */
   remove(context: IPowerUpContext): void
   {
+    if (this.timeoutId)
+    {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     context.setGameFrozen(false)
   }
 
