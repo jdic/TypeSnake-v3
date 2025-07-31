@@ -4,11 +4,14 @@ import type { IBoardConfig, IGameState, IIconsConfig, Position, PowerUpType } fr
  * RenderService is responsible for rendering the game state to the console.
  * It handles the drawing of the game board, UI elements, and updates based on the game state.
  * It can also update icons and board configurations dynamically.
+ * Uses frame buffering to reduce flicker/parpadeo.
  */
 export class RenderService
 {
   private board: IBoardConfig
   private icons: IIconsConfig
+  private previousFrame: string = ''
+  private isFirstRender: boolean = true
 
   constructor(board: IBoardConfig, icons: IIconsConfig)
   {
@@ -18,15 +21,32 @@ export class RenderService
 
   /**
    * Renders the entire game state to the console.
-   * It clears the screen, draws the board, and updates the UI with the current game state.
+   * It clears the screen only on first render, then moves the cursor to the home position.
+   * Only writes to the console if the frame has changed, reducing flicker.
    * 
    * @param gameState - The current state of the game to render.
    */
   render(gameState: IGameState): void
   {
-    this.clearScreen()
-    this.drawBoard(gameState)
-    this.drawUI(gameState)
+    const currentFrame = this.buildFrame(gameState)
+
+    if (this.isFirstRender || currentFrame !== this.previousFrame)
+    {
+      if (this.isFirstRender)
+      {
+        this.clearScreen()
+        this.isFirstRender = false
+      }
+
+      else
+      {
+        process.stdout.write('\x1b[H')
+      }
+
+      process.stdout.write(currentFrame)
+
+      this.previousFrame = currentFrame
+    }
   }
 
   /**
@@ -61,12 +81,30 @@ export class RenderService
   }
 
   /**
-   * Draws the game board based on the current game state.
+   * Builds the complete frame in memory before rendering.
+   * This reduces flicker by preparing everything before writing to stdout.
+   * 
+   * @param gameState - The current state of the game to render.
+   * @returns Complete frame as a string.
+   */
+  private buildFrame(gameState: IGameState): string
+  {
+    let frame = ''
+
+    frame += this.buildBoard(gameState)
+    frame += this.buildUI(gameState)
+
+    return frame
+  }
+
+  /**
+   * Builds the game board as a string based on the current game state.
    * It iterates through each position on the board and determines what to render (apple, snake, power-ups, etc.).
    * 
    * @param gameState - The current state of the game to render.
+   * @returns The board as a string.
    */
-  private drawBoard(gameState: IGameState): void
+  private buildBoard(gameState: IGameState): string
   {
     let boardString = ''
 
@@ -84,7 +122,7 @@ export class RenderService
       boardString += row + '\n'
     }
 
-    process.stdout.write(boardString)
+    return boardString
   }
 
   /**
@@ -128,12 +166,13 @@ export class RenderService
   }
 
   /**
-   * Draws the UI elements such as score, snake length, and active power-ups.
+   * Builds the UI elements as a string.
    * It formats the display to fit within the board's width and updates dynamically.
    * 
-   * @param gameState - The current state of the game to render in the UI.
+   * @param gameState - The current state of the game to render the UI.
+   * @returns The UI as a string.
    */
-  private drawUI(gameState: IGameState): void
+  private buildUI(gameState: IGameState): string
   {
     const text = `🏆 ${gameState.score} - 📏 ${gameState.snake.length}`
     const activepowerUpsIcons = this.getActivePowerUpsDisplay(gameState.activePowerUps)
@@ -145,9 +184,11 @@ export class RenderService
 
     const bottomLine = text + ' '.repeat(spacing) + activepowerUpsIcons
 
-    process.stdout.write(`\n${bottomLine}\n`)
+    let ui = `\n${bottomLine}\n`
 
-    this.drawGamesStatusMessages(gameState)
+    ui += this.buildGameStatusMessages(gameState)
+
+    return ui
   }
 
   /**
@@ -167,15 +208,14 @@ export class RenderService
       process.stdout.write(`\x1b[${y + 1};${x + 1}H${icon}`)
     })
 
-    this.drawUI(gameState)
+    process.stdout.write(this.buildUI(gameState))
   }
 
   /**
-   * Returns a string representation of the active power-ups for display.
-   * It maps the active power-up types to their corresponding icons.
+   * Builds the active power-ups display as a string.
    * 
-   * @param activePowerUps - An array of active power-up types.
-   * @returns A string of icons representing the active power-ups.
+   * @param activePowerUps - Array of active power-up types.
+   * @returns String of power-up icons.
    */
   private getActivePowerUpsDisplay(activePowerUps: PowerUpType[]): string
   {
@@ -190,12 +230,13 @@ export class RenderService
   }
 
   /**
-   * Draws the game status messages based on the current game state.
+   * Builds the game status messages as a string.
    * It displays messages for game over, pause, and other relevant status updates.
    * 
    * @param gameState - The current state of the game.
+   * @returns The status messages as a string.
    */
-  private drawGamesStatusMessages(gameState: IGameState): void
+  private buildGameStatusMessages(gameState: IGameState): string
   {
     const messages: string[] = []
 
@@ -210,19 +251,22 @@ export class RenderService
       messages.push('PAUSED')
     }
 
+    if (messages.length === 0)
+    {
+      return ''
+    }
+
     const boardWidth = this.board.width * 2
+    let statusString = ''
 
     messages.forEach((message) =>
     {
       const padding = Math.max(0, Math.floor((boardWidth - message.length) / 2))
       const centeredMessage = ' '.repeat(padding) + message
-
-      process.stdout.write(`\n${centeredMessage}`)
+      statusString += `\n${centeredMessage}`
     })
 
-    if (messages.length > 0)
-    {
-      process.stdout.write('\n')
-    }
+    statusString += '\n'
+    return statusString
   }
 }
