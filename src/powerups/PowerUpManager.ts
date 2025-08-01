@@ -61,10 +61,10 @@ export class PowerUpManager
   private boardWidth: number
   private boardHeight: number
 
-  constructor(config: IPowerUpConfig, boardWith: number, boardHeight: number)
+  constructor(config: IPowerUpConfig, boardWidth: number, boardHeight: number)
   {
     this.config = config
-    this.boardWidth = boardWith
+    this.boardWidth = boardWidth
     this.boardHeight = boardHeight
   }
 

@@ -101,7 +101,7 @@ export class SlowMotionStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  remove(context: IPowerUpContext)
+  remove(context: IPowerUpContext): void
   {
     if (this.timeoutId)
     {
