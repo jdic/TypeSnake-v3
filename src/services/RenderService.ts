@@ -250,9 +250,9 @@ export class RenderService
 
         if (remainingTime <= blinkThreshold && remainingTime > 0)
         {
-          const shouldShow = Math.floor(currentTime / 1000) % 2 === 0
-          
-          return shouldShow ? this.icons[activePowerUp.type] : ' '
+          const blinkCycle = Math.floor(currentTime / 250) % 2 === 0
+
+          return blinkCycle ? this.icons[activePowerUp.type] : ' '
         }
 
         return this.icons[activePowerUp.type]

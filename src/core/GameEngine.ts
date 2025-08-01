@@ -28,7 +28,9 @@ export class GameEngine implements IPowerUpContext
   private gameStateService: GameStateService
   
   private gameInterval: Timer | null = null
+
   private blinkInterval: Timer | null = null
+  private previousBlinkState: boolean = false
 
   private range: Range = 'regular'
   private currentBackgroundIcon: string
@@ -240,11 +242,19 @@ export class GameEngine implements IPowerUpContext
         return remainingTime <= blinkThreshold && remainingTime > 0
       })
 
-      if (hasBlinkingPowerUps)
+      if (hasBlinkingPowerUps || this.previousBlinkState !== hasBlinkingPowerUps)
       {
-        this.render()
+        if (hasBlinkingPowerUps)
+        {
+          this.forceRender()
+        }
+
+        else
+        {
+          this.render()
+        }
       }
-    }, 200)
+    }, 125)
   }
 
   /**
@@ -256,6 +266,7 @@ export class GameEngine implements IPowerUpContext
     {
       clearInterval(this.blinkInterval)
       this.blinkInterval = null
+      this.previousBlinkState = false
     }
   }
 
