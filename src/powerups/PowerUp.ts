@@ -1,4 +1,4 @@
-import type { Position, PowerUpType, Range } from '@type/global'
+import type { IBoardConfig, Position, PowerUpType, Range } from '@type/global'
 
 export interface IPowerUpContext
 {
@@ -21,7 +21,7 @@ export interface IPowerUpContext
   setGameFrozen(frozen: boolean): void
   isGameFrozen(): boolean
 
-  getBoardDimensions(): { width: number, height: number }
+  getBoardDimensions(): IBoardConfig
 
   redraw(): void
   clearInterval(): void

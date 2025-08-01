@@ -1,4 +1,4 @@
-import type { Direction, IGameConfig, IGameState, Position, Range } from '@type/global'
+import type { Direction, IBoardConfig, IGameConfig, IGameState, Position, Range } from '@type/global'
 import type { IPowerUpContext, PowerUp } from '@powerups/PowerUp'
 import { GameStateService } from '@services/GameStateService'
 import { PowerUpManager } from '@powerups/PowerUpManager'
@@ -9,6 +9,7 @@ import { DEFAULT_SPEEDS } from '@config/defaults'
 import { MathUtils } from '@utils/MathUtils'
 import { Apple } from '@entities/Apple'
 import { Snake } from '@entities/Snake'
+import { BoardUtils } from '@utils/BoardUtils'
 
 /**
  * GameEngine is the core class that manages the game logic, including
@@ -50,18 +51,15 @@ export class GameEngine implements IPowerUpContext
     this.currentScorePerApple = this.config.game.scorePerApple
     this.currentUpdateTime = this.calculateUpdateTime()
 
-    this.snake = new Snake(
-      [Math.floor(this.config.board.width / 2), Math.floor(this.config.board.height / 2)],
-      this.config.board.width,
-      this.config.board.height
-    )
+    const centerPosition = BoardUtils.getCenter(this.config.board)
 
-    this.apple = new Apple(this.config.board.width, this.config.board.height)
+    this.snake = new Snake(centerPosition, this.config.board)
+
+    this.apple = new Apple(this.config.board)
 
     this.powerUpManager = new PowerUpManager(
       this.config.powerUps,
-      this.config.board.width,
-      this.config.board.height
+      this.config.board
     )
 
     this.inputService = new InputService()
@@ -130,10 +128,9 @@ export class GameEngine implements IPowerUpContext
   {
     this.stopGameLoop()
 
-    const centerX = Math.floor(this.config.board.width / 2)
-    const centerY = Math.floor(this.config.board.height / 2)
+    const centerPosition = BoardUtils.getCenter(this.config.board)
     
-    this.snake.reset([centerX, centerY])
+    this.snake.reset(centerPosition)
     this.apple.respawn(this.snake.getSegments())
     this.powerUpManager.clearAllPowerUps()
 
@@ -543,12 +540,9 @@ export class GameEngine implements IPowerUpContext
    * 
    * @returns An object containing the width and height of the board.
    */
-  getBoardDimensions(): { width: number, height: number }
+  getBoardDimensions(): IBoardConfig
   {
-      return {
-        width: this.config.board.width,
-        height: this.config.board.height
-      }
+    return this.config.board
   }
 
   // START Implementation of IPowerUpContext methods

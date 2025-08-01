@@ -97,3 +97,9 @@ export interface ISpeedConfig
   medium: number
   high: number
 }
+
+export interface IBoardDimensions
+{
+  width: number
+  height: number
+}

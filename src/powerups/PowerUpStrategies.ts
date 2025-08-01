@@ -1,4 +1,5 @@
-import type { IPowerUpContext, IPowerUpStrategy } from '@powerups/PowerUp'
+import { BasePowerUpStrategy, InstantPowerUpStrategy } from './BasePowerUpStrategy'
+import type { IPowerUpContext } from '@powerups/PowerUp'
 
 /**
  * Strategy for the Magnet power-up.
@@ -6,55 +7,21 @@ import type { IPowerUpContext, IPowerUpStrategy } from '@powerups/PowerUp'
  * It applies a range effect that pulls apples towards the snake for a specified duration.
  * After the duration, it resets the range to regular.
  */
-export class MagnetStrategy implements IPowerUpStrategy
+export class MagnetStrategy extends BasePowerUpStrategy
 {
-  private duration: number
-  private timeoutId: Timer | null = null
-
   constructor(duration: number = 2000)
   {
-    this.duration = duration
+    super(duration)
   }
 
-  /**
-   * Applies the magnet effect by setting the range to 'expanded'.
-   * 
-   * @param context - The context in which the power-up is applied.
-   */
-  apply(context: IPowerUpContext): void
+  protected override applyEffect(context: IPowerUpContext): void
   {
     context.setRange('expanded')
-
-    this.timeoutId = setTimeout(() =>
-    {
-      this.remove(context)
-    }, this.duration)
   }
 
-  /**
-   * Removes the magnet effect by resetting the range to 'regular'.
-   * 
-   * @param context - The context in which the power-up is applied.
-   */
-  remove(context: IPowerUpContext): void
+  protected override removeEffect(context: IPowerUpContext): void
   {
-    if (this.timeoutId)
-    {
-      clearTimeout(this.timeoutId)
-      this.timeoutId = null
-    }
-
     context.setRange('regular')
-  }
-
-  /**
-   * Returns the duration of the magnet effect.
-   * 
-   * @returns The duration of the magnet effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return this.duration
   }
 }
 
@@ -64,63 +31,29 @@ export class MagnetStrategy implements IPowerUpStrategy
  * It temporarily increases the update time, making the game run slower.
  * After the duration, it resets the update time to its original value.
  */
-export class SlowMotionStrategy implements IPowerUpStrategy
+export class SlowMotionStrategy extends BasePowerUpStrategy
 {
-  private duration: number
-  private originalUpdateTime: number = 0
-  private timeoutId: Timer | null  = null
+  private orignalUpdateTime: number = 0
 
   constructor(duration: number = 2000)
   {
-    this.duration = duration
+    super(duration)
   }
 
-  /**
-   * Applies the slow motion effect by increasing the update time.
-   * It sets a new interval to slow down the game speed.
-   * 
-   * @param context - The context in which the power-up is applied.
-   */
-  apply(context: IPowerUpContext): void
+  protected override applyEffect(context: IPowerUpContext): void
   {
-    this.originalUpdateTime = context.getUpdateTime()
+    this.orignalUpdateTime = context.getUpdateTime()
 
-    const newUpdateTime = this.originalUpdateTime + 200
+    const newUpdateTime = this.orignalUpdateTime + 200
 
     context.clearInterval()
     context.setInterval(() => {}, newUpdateTime)
-    
-    this.timeoutId = setTimeout(() =>
-    {
-      this.remove(context)
-    }, this.duration)
   }
 
-  /**
-   * Removes the slow motion effect by resetting the update time to its original value.
-   * 
-   * @param context - The context in which the power-up is applied.
-   */
-  remove(context: IPowerUpContext): void
+  protected override removeEffect(context: IPowerUpContext): void
   {
-    if (this.timeoutId)
-    {
-      clearTimeout(this.timeoutId)
-      this.timeoutId = null
-    }
-
     context.clearInterval()
-    context.setInterval(() => {}, this.originalUpdateTime)
-  }
-
-  /**
-   * Returns the duration of the slow motion effect.
-   * 
-   * @returns The duration of the slow motion effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return this.duration    
+    context.setInterval(() => {}, this.orignalUpdateTime)
   }
 }
 
@@ -133,17 +66,15 @@ export class SlowMotionStrategy implements IPowerUpStrategy
  * 
  * After the duration, it resets the background icon and score per apple to their original values.
  */
-export class BonusStrategy implements IPowerUpStrategy
+export class BonusStrategy extends BasePowerUpStrategy
 {
-  private duration: number
   private originalBackgroundIcon: string = ''
   private originalScorePerApple: number = 0
   private intervalId: Timer | null = null
-  private timeoutId: Timer | null = null
 
   constructor(duration: number = 2000)
   {
-    this.duration = duration
+    super(duration)
   }
 
   /**
@@ -152,14 +83,14 @@ export class BonusStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  apply(context: IPowerUpContext): void
+  protected override applyEffect(context: IPowerUpContext): void
   {
     this.originalBackgroundIcon = context.getBackgroundIcon()
     this.originalScorePerApple = context.getScorePerApple()
 
     context.setScorePerApple(15)
 
-    this.intervalId = setInterval(() =>
+    this.intervalId = this.timeManager.setInterval(() =>
     {
       const currentIcon = context.getBackgroundIcon()
       const newIcon = currentIcon === '🟦' ? '⬜' : '🟦'
@@ -167,11 +98,6 @@ export class BonusStrategy implements IPowerUpStrategy
       context.setBackgroundIcon(newIcon)
       context.redraw()
     }, context.getUpdateTime())
-
-    this.timeoutId = setTimeout(() =>
-    {
-      this.remove(context)
-    }, this.duration)
   }
 
   /**
@@ -180,33 +106,17 @@ export class BonusStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  remove(context: IPowerUpContext): void
+  protected override removeEffect(context: IPowerUpContext): void
   {
     if (this.intervalId)
     {
-      clearInterval(this.intervalId)
+      this.timeManager.clearInterval(this.intervalId)
       this.intervalId = null
-    }
-
-    if (this.timeoutId)
-    {
-      clearTimeout(this.timeoutId)
-      this.timeoutId = null
     }
 
     context.setBackgroundIcon(this.originalBackgroundIcon)
     context.setScorePerApple(this.originalScorePerApple)
     context.redraw()
-  }
-
-  /**
-   * Returns the duration of the bonus effect.
-   * 
-   * @returns The duration of the bonus effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return this.duration
   }
 }
 
@@ -215,14 +125,11 @@ export class BonusStrategy implements IPowerUpStrategy
  * This power-up grants the snake invincibility for a specified duration.
  * While invincible, the snake cannot be harmed by collisions with itself or walls.
  */
-export class InvincibilityStrategy implements IPowerUpStrategy
+export class InvincibilityStrategy extends BasePowerUpStrategy
 {
-  private duration: number
-  private timeoutId: Timer | null = null
-
   constructor(duration: number = 3000)
   {
-    this.duration = duration
+    super(duration)
   }
 
   /**
@@ -231,14 +138,9 @@ export class InvincibilityStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  apply(context: IPowerUpContext): void
+  protected override applyEffect(context: IPowerUpContext): void
   {
     context.setInvincible(true)
-    
-    this.timeoutId = setTimeout(() =>
-    {
-      this.remove(context)
-    }, this.duration)
   }
 
   /**
@@ -246,25 +148,9 @@ export class InvincibilityStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  remove(context: IPowerUpContext): void
+  protected override removeEffect(context: IPowerUpContext): void
   {
-    if (this.timeoutId)
-    {
-      clearTimeout(this.timeoutId)
-      this.timeoutId = null
-    }
-
     context.setInvincible(false)
-  }
-
-  /**
-   * Returns the duration of the invincibility effect.
-   * 
-   * @returns The duration of the invincibility effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return this.duration
   }
 }
 
@@ -274,15 +160,13 @@ export class InvincibilityStrategy implements IPowerUpStrategy
  * It applies a faster update interval for a specified duration.
  * After the duration, it resets the update time to its original value.
  */
-export class BoostStrategy implements IPowerUpStrategy
+export class BoostStrategy extends BasePowerUpStrategy
 {
-  private duration: number
   private originalUpdateTime: number = 0
-  private timeoutId: Timer | null = null
 
   constructor(duration: number = 2000)
   {
-    this.duration = duration
+    super(duration)
   }
 
   /**
@@ -291,19 +175,14 @@ export class BoostStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  apply(context: IPowerUpContext): void
+  protected override applyEffect(context: IPowerUpContext): void
   {
     this.originalUpdateTime = context.getUpdateTime()
 
     const newUpdateTime = Math.max(30, this.originalUpdateTime - 100)
 
     context.clearInterval()
-    context.setInterval(() => {  }, newUpdateTime)
-
-    this.timeoutId = setTimeout(() =>
-    {
-      this.remove(context)
-    }, this.duration)
+    context.setInterval(() => {}, newUpdateTime)
   }
 
   /**
@@ -312,26 +191,10 @@ export class BoostStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  remove(context: IPowerUpContext): void
+  protected override removeEffect(context: IPowerUpContext): void
   {
-    if (this.timeoutId)
-    {
-      clearTimeout(this.timeoutId)
-      this.timeoutId = null
-    }
-
     context.clearInterval()
-    context.setInterval(() => {  }, this.originalUpdateTime)
-  }
-
-  /**
-   * Returns the duration of the boost effect.
-   * 
-   * @returns The duration of the boost effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return this.duration
+    context.setInterval(() => {}, this.originalUpdateTime)
   }
 }
 
@@ -340,43 +203,16 @@ export class BoostStrategy implements IPowerUpStrategy
  * This power-up allows the snake to teleport to a random position on the board.
  * It does not have a duration, as it applies the teleport effect immediately.
  */
-export class TeleportStrategy implements IPowerUpStrategy
+export class TeleportStrategy extends InstantPowerUpStrategy
 {
-  constructor()
-  {
-
-  }
-
   /**
    * Applies the teleport effect by moving the snake to a random position on the board.
    * 
    * @param context - The context in which the power-up is applied.
    */
-  apply(context: IPowerUpContext): void
+  protected override applyInstantEffect(context: IPowerUpContext): void
   {
     context.teleportSnake()
-  }
-
-  /**
-   * Removes the teleport effect.
-   * Since teleportation is instantaneous, this method does not perform any action.
-   * 
-   * @param context - The context in which the power-up is applied.
-   */
-  remove(): void
-  {
-
-  }
-
-  /**
-   * Returns the duration of the teleport effect.
-   * Since teleportation is instantaneous, it returns zero.
-   * 
-   * @returns The duration of the teleport effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return 0
   }
 }
 
@@ -386,14 +222,11 @@ export class TeleportStrategy implements IPowerUpStrategy
  * It applies a freeze effect for a specified duration.
  * After the duration, it unfreezes the game.
  */
-export class FreezeStrategy implements IPowerUpStrategy
+export class FreezeStrategy extends BasePowerUpStrategy
 {
-  private duration: number
-  private timeoutId: Timer | null = null
-
   constructor(duration: number = 1500)
   {
-    this.duration = duration
+    super(duration)
   }
 
   /**
@@ -402,14 +235,9 @@ export class FreezeStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  apply(context: IPowerUpContext): void
+  protected override applyEffect(context: IPowerUpContext): void
   {
     context.setGameFrozen(true)
-
-    this.timeoutId = setTimeout(() =>
-    {
-      this.remove(context)
-    }, this.duration)
   }
 
   /**
@@ -417,24 +245,8 @@ export class FreezeStrategy implements IPowerUpStrategy
    * 
    * @param context - The context in which the power-up is applied.
    */
-  remove(context: IPowerUpContext): void
+  protected override removeEffect(context: IPowerUpContext): void
   {
-    if (this.timeoutId)
-    {
-      clearTimeout(this.timeoutId)
-      this.timeoutId = null
-    }
-
     context.setGameFrozen(false)
-  }
-
-  /**
-   * Returns the duration of the freeze effect.
-   * 
-   * @returns The duration of the freeze effect in milliseconds.
-   */
-  getDuration(): number
-  {
-    return this.duration
   }
 }

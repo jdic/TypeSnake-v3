@@ -1,4 +1,5 @@
-import type { Position } from '@type/global'
+import { PositionValidator } from '@utils/PositionValidator'
+import type { IBoardConfig, Position } from '@type/global'
 import { MathUtils } from '@utils/MathUtils'
 
 /**
@@ -8,13 +9,11 @@ import { MathUtils } from '@utils/MathUtils'
 export class Apple
 {
   private position: Position
-  private readonly boardWidth: number
-  private readonly boardHeight: number
+  private positionValidator: PositionValidator
 
-  constructor(boardWidth: number, boardHeight: number)
+  constructor(board: IBoardConfig)
   {
-    this.boardWidth = boardWidth
-    this.boardHeight = boardHeight
+    this.positionValidator = new PositionValidator(board)
     this.position = this.generateNewPosition()
   }
 
@@ -36,23 +35,17 @@ export class Apple
    */
   respawn(occupiedPositions: Position[] = []): void
   {
-    let newPosition: Position
-    let attempts = 0
+    const newPosition = this.positionValidator.generateValidPosition(occupiedPositions)
 
-    const maxAttempts = this.boardWidth * this.boardHeight
-
-    do
+    if (newPosition)
     {
-      newPosition = this.generateNewPosition()
-      attempts++
+      this.position = newPosition
     }
 
-    while (
-      attempts < maxAttempts &&
-      occupiedPositions.some((_position) => MathUtils.positionsEqual(_position, newPosition))
-    )
-
-    this.position = newPosition
+    else
+    {
+      this.position = this.generateNewPosition()
+    }
   }
 
   /**
@@ -73,6 +66,6 @@ export class Apple
    */
   private generateNewPosition(): Position
   {
-    return MathUtils.getRandomPosition(this.boardWidth, this.boardHeight)
+    return this.positionValidator.generateValidPosition() || [0, 0]
   }
 }

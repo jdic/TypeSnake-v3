@@ -1,7 +1,8 @@
 import { BonusStrategy, MagnetStrategy, SlowMotionStrategy,  InvincibilityStrategy, TeleportStrategy, BoostStrategy, FreezeStrategy } from '@powerups/PowerUpStrategies'
-import type { PowerUpType, Position, IPowerUpConfig, IPowerUpSettings } from '@type/global'
+import type { PowerUpType, Position, IPowerUpConfig, IPowerUpSettings, IBoardConfig } from '@type/global'
 import { PowerUp, type IPowerUpStrategy } from '@powerups/PowerUp'
 import { MathUtils } from '@utils/MathUtils'
+import { PositionValidator } from '@utils/PositionValidator'
 
 /**
  * Factory class for creating power-ups.
@@ -58,14 +59,12 @@ export class PowerUpManager
 {
   private activePowerUps: PowerUp[] = []
   private config: IPowerUpConfig
-  private boardWidth: number
-  private boardHeight: number
+  private positionValidator: PositionValidator
 
-  constructor(config: IPowerUpConfig, boardWidth: number, boardHeight: number)
+  constructor(config: IPowerUpConfig, board: IBoardConfig)
   {
     this.config = config
-    this.boardWidth = boardWidth
-    this.boardHeight = boardHeight
+    this.positionValidator = new PositionValidator(board)
   }
 
   /**
@@ -184,21 +183,6 @@ export class PowerUpManager
    */
   private getValidPosition(occupiedPositions: Position[]): Position | null
   {
-    let attempts = 0
-    const maxAttempts = this.boardWidth * this.boardHeight
-
-    while (attempts < maxAttempts)
-    {
-      const position = MathUtils.getRandomPosition(this.boardWidth, this.boardHeight)
-
-      if (!occupiedPositions.some((p) => MathUtils.positionsEqual(p, position)))
-      {
-        return position
-      }
-
-      attempts++
-    }
-
-    return null
+    return this.positionValidator.generateValidPosition(occupiedPositions)
   }
 }

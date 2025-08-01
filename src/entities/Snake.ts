@@ -1,4 +1,5 @@
-import type { Direction, Position } from '@type/global'
+import type { Direction, IBoardConfig, Position } from '@type/global'
+import { PositionValidator } from '@utils/PositionValidator'
 import { MathUtils } from '@utils/MathUtils'
 
 /**
@@ -9,15 +10,13 @@ export class Snake
 {
   private segments: Position[]
   private direction: Direction
-  private readonly boardWidth: number
-  private readonly boardHeight: number
+  private positionValidator: PositionValidator
 
-  constructor(initialPosition: Position, boardWidth: number, boardHeight: number)
+  constructor(initialPosition: Position, board: IBoardConfig)
   {
     this.segments = [initialPosition]
     this.direction = [0, -1]
-    this.boardWidth = boardWidth
-    this.boardHeight = boardHeight
+    this.positionValidator = new PositionValidator(board)
   }
 
   /**
@@ -87,7 +86,7 @@ export class Snake
       head[1] + this.direction[1]
     ]
 
-    const wrappedHead = MathUtils.wrapPosition(newHead, this.boardWidth, this.boardHeight)
+    const wrappedHead = this.positionValidator.wrapPosition(newHead)
     this.segments.unshift(wrappedHead)
 
     const tail = this.segments.pop()!
@@ -178,9 +177,9 @@ export class Snake
 
     this.segments = this.segments.map((segment) =>
     {
-      const [x, y] = MathUtils.wrapPosition([segment[0] + offset[0], segment[1] + offset[1]], this.boardWidth, this.boardHeight)
+      const newSegmentPosition: Position = [segment[0] + offset[0], segment[1] + offset[1]]
 
-      return [x, y]
+      return this.positionValidator.wrapPosition(newSegmentPosition)
     })
   }
 }
