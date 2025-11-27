@@ -492,26 +492,33 @@ export class GameEngine implements IPowerUpContext
     const allPowerUps = this.gameStateService.getState().powerUps
     const occupiedPositions = [...segments, this.apple.getPosition(), ...allPowerUps.map((p) => p.position)]
 
+    const maxAttempts = Math.max(100, this.config.board.width * this.config.board.height)
     let attempts = 0
-    let newPosition: Position
+    let newPosition: Position | null = null
 
-    const getPosition = (range: number): number => Math.floor(Math.random() * range)
-
-    do
+    while (attempts < maxAttempts)
     {
-      newPosition =
-      [
-        getPosition(this.config.board.width),
-        getPosition(this.config.board.height)
+      const candidate: Position = [
+        Math.floor(Math.random() * this.config.board.width),
+        Math.floor(Math.random() * this.config.board.height)
       ]
+
+      const isOccupied = occupiedPositions.some((pos) => pos[0] === candidate[0] && pos[1] === candidate[1])
+
+      if (!isOccupied)
+      {
+        newPosition = candidate
+        break
+      }
 
       attempts++
     }
 
-    while (
-      attempts < 100 &&
-      occupiedPositions.some((pos) => pos[0] === newPosition[0] && pos[1] === newPosition[1])
-    )
+    // Fallback: if no free position found, keep current position
+    if (!newPosition)
+    {
+      newPosition = this.snake.getHead()
+    }
 
     this.snake.teleportTo(newPosition)
   }
