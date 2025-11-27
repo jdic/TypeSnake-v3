@@ -23,7 +23,7 @@ export class RenderService
    * Renders the entire game state to the console.
    * It clears the screen only on first render, then moves the cursor to the home position.
    * Only writes to the console if the frame has changed, reducing flicker.
-   * 
+   *
    * @param gameState - The current state of the game to render.
    */
   render(gameState: IGameState): void
@@ -52,7 +52,7 @@ export class RenderService
   /**
    * Forces a complete re-render by clearing the previous frame.
    * This ensures the next render will be displayed regardless of frame comparison.
-   * 
+   *
    * @param gameState - The current state of the game to render.
    */
   forceRender(gameState: IGameState): void
@@ -66,7 +66,7 @@ export class RenderService
   /**
    * Updates the icons used for rendering the game.
    * It merges the new icons with the existing ones.
-   * 
+   *
    * @param icons - An object containing new icon configurations.
    */
   updateIcons(icons: IIconsConfig): void
@@ -77,7 +77,7 @@ export class RenderService
   /**
    * Updates the game board configuration.
    * It allows changing the dimensions of the board dynamically.
-   * 
+   *
    * @param board - The new board configuration to apply.
    */
   updateBoard(board: IBoardConfig): void
@@ -97,7 +97,7 @@ export class RenderService
   /**
    * Builds the complete frame in memory before rendering.
    * This reduces flicker by preparing everything before writing to stdout.
-   * 
+   *
    * @param gameState - The current state of the game to render.
    * @returns Complete frame as a string.
    */
@@ -114,7 +114,7 @@ export class RenderService
   /**
    * Builds the game board as a string based on the current game state.
    * It iterates through each position on the board and determines what to render (apple, snake, power-ups, etc.).
-   * 
+   *
    * @param gameState - The current state of the game to render.
    * @returns The board as a string.
    */
@@ -142,7 +142,7 @@ export class RenderService
   /**
    * Determines the icon to render at a specific position based on the game state.
    * It checks for apples, power-ups, and snake segments to decide which icon to use.
-   * 
+   *
    * @param position - The position on the board to check.
    * @param gameState - The current state of the game.
    * @returns The icon string to render at the specified position.
@@ -166,7 +166,7 @@ export class RenderService
       return this.icons[powerUp.type]
     }
 
-    const isSnakeSegment = gameState.snake.some((segment) => 
+    const isSnakeSegment = gameState.snake.some((segment) =>
     {
       return segment[0] === x && segment[1] === y
     })
@@ -182,7 +182,7 @@ export class RenderService
   /**
    * Builds the UI elements as a string.
    * It formats the display to fit within the board's width and updates dynamically.
-   * 
+   *
    * @param gameState - The current state of the game to render the UI.
    * @returns The UI as a string.
    */
@@ -208,7 +208,7 @@ export class RenderService
   /**
    * Renders a partial update of the game state.
    * It updates only the changed positions on the board, which is more efficient for frequent updates.
-   * 
+   *
    * @param gameState - The current state of the game to render.
    * @param changedPositions - An array of positions that have changed since the last render.
    */
@@ -228,7 +228,7 @@ export class RenderService
   /**
    * Builds the active power-ups display as a string.
    * Power-ups that are about to expire will blink.
-   * 
+   *
    * @param activePowerUps - Array of active power-ups with timing information.
    * @returns String of power-up icons.
    */
@@ -263,7 +263,7 @@ export class RenderService
   /**
    * Builds the game status messages as a string.
    * It displays messages for game over, pause, and other relevant status updates.
-   * 
+   *
    * @param gameState - The current state of the game.
    * @returns The status messages as a string.
    */

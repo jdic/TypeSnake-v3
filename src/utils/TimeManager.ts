@@ -1,6 +1,6 @@
 /**
  * Utility class for managing timers (timeouts and intervals).
- * 
+ *
  * Provides a centralized way to handle timer cleanup and management.
  */
 export class TimeManager
@@ -10,7 +10,7 @@ export class TimeManager
 
   /**
    * Sets a timeout and returns its ID.
-   * 
+   *
    * @param callback - The function to call after the delay.
    * @param delay - The delay in milliseconds.
    * @returns The ID of the timeout.
@@ -31,7 +31,7 @@ export class TimeManager
 
   /**
    * Sets an interval and returns its ID.
-   * 
+   *
    * @param callback - The function to call on each interval.
    * @param interval - The interval duration in milliseconds.
    * @returns The ID of the interval.
@@ -47,7 +47,7 @@ export class TimeManager
 
   /**
    * Clears a interval by its ID.
-   * 
+   *
    * @param intervalId - The ID of the interval to clear.
    */
   clearInterval(intervalId: Timer): void
@@ -73,7 +73,7 @@ export class TimeManager
 
   /**
    * Gets the count of active timeouts and intervals.
-   * 
+   *
    * @returns An object containing the count of active timeouts and intervals.
    */
   getActiveCount(): { timeouts: number, intervals: number }

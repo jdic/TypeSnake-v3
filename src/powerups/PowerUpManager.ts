@@ -28,7 +28,7 @@ export class PowerUpFactory
   /**
    * Creates a power-up instance based on the provided position and type.
    * It uses the strategy map to determine the appropriate strategy for the power-up type.
-   * 
+   *
    * @param position - The position of the power-up on the board.
    * @param type - The type of the power-up.
    * @param duration - The duration of the power-up effect.
@@ -42,7 +42,7 @@ export class PowerUpFactory
 
   /**
    * Returns a list of available power-up types.
-   * 
+   *
    * @returns An array of power-up types that can be created.
    */
   static getAvailableTypes(): PowerUpType[]
@@ -70,14 +70,14 @@ export class PowerUpManager
   /**
    * Generates random power-ups based on the configuration and current occupied positions.
    * It ensures that new power-ups do not overlap with existing ones.
-   * 
+   *
    * @param occupiedPositions - An array of positions that are currently occupied by other game elements.
    * @returns An array of newly generated power-ups.
    */
   generateRandomPowerUps(occupiedPositions: Position[] = []): PowerUp[]
   {
     const newPowerUps: PowerUp[] = []
-    
+
     for (const [type, settings] of Object.entries(this.config) as [PowerUpType, IPowerUpSettings][])
     {
       if (settings.enabled && MathUtils.shouldHappen(settings.probability))
@@ -99,7 +99,7 @@ export class PowerUpManager
 
   /**
    * Adds a power-up to the active list if it does not already exist.
-   * 
+   *
    * @param powerUp - The power-up to be added.
    */
   addPowerUp(powerUp: PowerUp): void
@@ -116,7 +116,7 @@ export class PowerUpManager
 
   /**
    * Removes a power-up from the active list by its type.
-   * 
+   *
    * @param type - The type of the power-up to be removed.
    * @returns The removed power-up if found, otherwise null.
    */
@@ -135,7 +135,7 @@ export class PowerUpManager
   /**
    * Finds a power-up by its position.
    * Returns the power-up if found, otherwise returns null.
-   * 
+   *
    * @param position - The position to search for the power-up.
    * @returns The found power-up or null if not found.
    */
@@ -149,7 +149,7 @@ export class PowerUpManager
 
   /**
    * Returns all active power-ups.
-   * 
+   *
    * @returns An array of currently active power-ups.
    */
   getActivePowerUps(): PowerUp[]
@@ -168,7 +168,7 @@ export class PowerUpManager
   /**
    * Updates the power-up configuration.
    * This allows for dynamic changes to the power-up settings during the game.
-   * 
+   *
    * @param config - The new power-up configuration to apply.
    */
   updateConfig(config: IPowerUpConfig): void
@@ -178,7 +178,7 @@ export class PowerUpManager
 
   /**
    * Returns the current power-up configuration.
-   * 
+   *
    * @returns The current power-up configuration.
    */
   private getValidPosition(occupiedPositions: Position[]): Position | null

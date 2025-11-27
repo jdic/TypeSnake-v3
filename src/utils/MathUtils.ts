@@ -9,7 +9,7 @@ export class MathUtils
 {
   /**
    * Generates a random position within the specified board dimensions.
-   * 
+   *
    * @param maxWidth - The maximum width of the board.
    * @param maxHeight - The maximum height of the board.
    * @returns A random position represented as a tuple [x, y].
@@ -23,7 +23,7 @@ export class MathUtils
 
   /**
    * Calculates the Manhattan distance between two positions.
-   * 
+   *
    * @param pos1 - The first position as a tuple [x, y].
    * @param pos2 - The second position as a tuple [x, y].
    * @returns The Manhattan distance between the two positions.
@@ -35,7 +35,7 @@ export class MathUtils
 
   /**
    * Checks if two positions are equal.
-   * 
+   *
    * @param pos1 - The first position as a tuple [x, y].
    * @param pos2 - The second position as a tuple [x, y].
    * @returns True if the positions are equal, false otherwise.
@@ -47,7 +47,7 @@ export class MathUtils
 
   /**
    * Checks if a target position is within a specified range of a center position.
-   * 
+   *
    * @param centerPos - The center position as a tuple [x, y].
    * @param targetPos - The target position as a tuple [x, y].
    * @param range - The range within which the target position should be checked.
@@ -64,7 +64,7 @@ export class MathUtils
    * Wraps a position around the board dimensions.
    * This is useful for implementing a toroidal board where moving off one edge
    * brings the player to the opposite edge.
-   * 
+   *
    * @param position - The position to wrap as a tuple [x, y].
    * @param boardWidth - The width of the board.
    * @param boardHeight - The height of the board.
@@ -79,7 +79,7 @@ export class MathUtils
 
   /**
    * Generates a random integer between two values, inclusive.
-   * 
+   *
    * @param min - The minimum value (inclusive).
    * @param max - The maximum value (inclusive).
    * @returns A random integer between min and max.
@@ -91,7 +91,7 @@ export class MathUtils
 
   /**
    * Determines if an event should happen based on a given probability.
-   * 
+   *
    * @param probability - The probability of the event occurring (0 to 1).
    * @returns True if the event should happen, false otherwise.
    */

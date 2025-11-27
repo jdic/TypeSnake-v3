@@ -14,7 +14,7 @@ import { BoardUtils } from '@utils/BoardUtils'
 /**
  * GameEngine is the core class that manages the game logic, including
  * the snake, apple, power-ups, rendering, and user input.
- * 
+ *
  * It provides methods to start, pause, restart, and stop the game,
  * as well as to update the game state and render the game board.
  */
@@ -27,7 +27,7 @@ export class GameEngine implements IPowerUpContext
   private inputService: InputService
   private renderService: RenderService
   private gameStateService: GameStateService
-  
+
   private gameInterval: Timer | null = null
 
   private blinkInterval: Timer | null = null
@@ -107,17 +107,17 @@ export class GameEngine implements IPowerUpContext
     }
 
     this.gameStateService.setPaused(!currentState.isPaused)
-    
+
     if (currentState.isPaused)
     {
       this.startGameLoop()
     }
-    
+
     else
     {
       this.stopGameLoop()
     }
-    
+
     this.forceRender()
   }
 
@@ -129,7 +129,7 @@ export class GameEngine implements IPowerUpContext
     this.stopGameLoop()
 
     const centerPosition = BoardUtils.getCenter(this.config.board)
-    
+
     this.snake.reset(centerPosition)
     this.apple.respawn(this.snake.getSegments())
     this.powerUpManager.clearAllPowerUps()
@@ -191,7 +191,7 @@ export class GameEngine implements IPowerUpContext
   private startGameLoop(): void
   {
     if (this.gameInterval) return
-    
+
     this.gameInterval = setInterval(() =>
     {
       this.update()
@@ -324,7 +324,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Eats the apple and updates the game state.
-   * 
+   *
    * @param tailPosition - The position of the snake's tail.
    */
   private eatApple(tailPosition: Position): void
@@ -338,7 +338,7 @@ export class GameEngine implements IPowerUpContext
       ...this.powerUpManager.getActivePowerUps().map((p) => p.position)
     ]
     this.apple.respawn(occupiedPositions)
- 
+
     const newPowerUps = this.powerUpManager.generateRandomPowerUps(occupiedPositions)
 
     newPowerUps.forEach((powerUp) =>
@@ -349,7 +349,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Eats a power-up and applies its effects and adds/removes active power-up status.
-   * 
+   *
    * @param powerUp - The power-up to be consumed.
    * @param tailPosition - The position of the snake's tail.
    */
@@ -387,7 +387,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Checks if two positions are in range.
-   * 
+   *
    * @param pos1 - The first position.
    * @param pos2 - The second position.
    * @returns True if the positions are in range, false otherwise.
@@ -447,7 +447,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Calculates the update time for the game loop.
-   * 
+   *
    * @returns The update time in milliseconds.
    */
   private calculateUpdateTime(): number
@@ -462,7 +462,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Sets the range for the game.
-   * 
+   *
    * @param range - The range to set, either 'regular' or 'expanded'.
    */
   setInvincible(invincible: boolean): void
@@ -472,7 +472,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Checks if the snake is currently invincible.
-   * 
+   *
    * @returns True if the snake is invincible, false otherwise.
    */
   isInvincible(): boolean
@@ -517,7 +517,7 @@ export class GameEngine implements IPowerUpContext
   /**
    * Sets the game to a frozen state.
    * This prevents any movements or actions in the game.
-   * 
+   *
    * @param frozen - If true, the game will be frozen.
    */
   setGameFrozen(frozen: boolean): void
@@ -527,7 +527,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Checks if the game is currently frozen.
-   * 
+   *
    * @returns True if the game is frozen, false otherwise.
    */
   isGameFrozen(): boolean
@@ -537,7 +537,7 @@ export class GameEngine implements IPowerUpContext
 
   /**
    * Returns the current board dimensions.
-   * 
+   *
    * @returns An object containing the width and height of the board.
    */
   getBoardDimensions(): IBoardConfig

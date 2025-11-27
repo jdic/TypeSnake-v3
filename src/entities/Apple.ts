@@ -19,7 +19,7 @@ export class Apple
 
   /**
    * Returns the current position of the Apple.
-   * 
+   *
    * @returns The position of the Apple as a tuple [x, y].
    */
   getPosition(): Position
@@ -30,7 +30,7 @@ export class Apple
   /**
    * Respawns the Apple at a new position.
    * It ensures that the new position does not overlap with any occupied positions.
-   * 
+   *
    * @param occupiedPositions - An array of positions that are currently occupied.
    */
   respawn(occupiedPositions: Position[] = []): void
@@ -50,7 +50,7 @@ export class Apple
 
   /**
    * Checks if the Apple is at a specific position.
-   * 
+   *
    * @param position - The position to check against the Apple.
    * @returns True if the Apple is at the specified position, otherwise false.
    */
@@ -61,7 +61,7 @@ export class Apple
 
   /**
    * Generates a new random position for the Apple.
-   * 
+   *
    * @returns A new position as a tuple [x, y].
    */
   private generateNewPosition(): Position

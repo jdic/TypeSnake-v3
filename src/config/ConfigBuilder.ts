@@ -16,7 +16,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the difficulty level of the game.
-   * 
+   *
    * @param difficulty - The difficulty level to set, e.g., 'easy', 'medium', 'hard'.
    * @returns The current instance of GameConfigBuilder for method chaining.
    */
@@ -29,7 +29,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the size of the game board.
-   * 
+   *
    * @param width - The width of the board.
    * @param height - The height of the board.
    * @returns The current instance of GameConfigBuilder for method chaining.
@@ -44,7 +44,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the score awarded for each apple collected.
-   * 
+   *
    * @param score - The score to set for each apple.
    * @returns The current instance of GameConfigBuilder for method chaining.
    */
@@ -57,7 +57,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the update time for the game loop.
-   * 
+   *
    * @param time - The update time in milliseconds.
    * @returns The current instance of GameConfigBuilder for method chaining.
    */
@@ -70,7 +70,7 @@ export class GameConfigBuilder
 
   /**
    * Enables or disables a specific power-up type.
-   * 
+   *
    * @param type - The type of power-up to enable or disable.
    * @param enabled - Whether to enable the power-up (default is true).
    * @returns The current instance of GameConfigBuilder for method chaining.
@@ -84,7 +84,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the probability of a specific power-up appearing.
-   * 
+   *
    * @param type - The type of power-up to set the probability for.
    * @param probability - The probability value between 0 and 1.
    * @returns The current instance of GameConfigBuilder for method chaining.
@@ -98,7 +98,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the icon for a specific game element.
-   * 
+   *
    * @param iconType - The type of icon to set.
    * @param icon - The icon string to set.
    * @returns The current instance of GameConfigBuilder for method chaining.
@@ -112,7 +112,7 @@ export class GameConfigBuilder
 
   /**
    * Sets the expanded range for the game.
-   * 
+   *
    * @param range - The expanded range value.
    * @returns The current instance of GameConfigBuilder for method chaining.
    */
@@ -125,7 +125,7 @@ export class GameConfigBuilder
 
   /**
    * Builds and returns the complete game configuration object.
-   * 
+   *
    * @returns The complete game configuration as an IGameConfig object.
    */
   build(): IGameConfig
@@ -135,14 +135,14 @@ export class GameConfigBuilder
 
   /**
    * Creates a GameConfigBuilder instance from a partial configuration object.
-   * 
+   *
    * @param partialConfig - The partial configuration object to use.
    * @returns A new instance of GameConfigBuilder.
    */
   static fromPartialConfig(partialConfig: Partial<IGameConfig>): GameConfigBuilder
   {
     const builder = new GameConfigBuilder()
-    
+
     if (partialConfig.board)
     {
       if (partialConfig.board.width)
@@ -184,7 +184,7 @@ export class GameConfigBuilder
       Object.entries(partialConfig.powerUps).forEach(([key, value]) =>
       {
         const powerUpKey = key as keyof IGameConfig['powerUps']
-  
+
         if (value.enabled !== undefined)
         {
           builder.config.powerUps[powerUpKey].enabled = value.enabled

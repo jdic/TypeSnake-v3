@@ -21,7 +21,7 @@ export class Snake
 
   /**
    * Returns the current position of the Snake's head.
-   * 
+   *
    * @returns The position of the Snake's head as a tuple [x, y].
    */
   getHead(): Position
@@ -31,7 +31,7 @@ export class Snake
 
   /**
    * Returns the current segments of the Snake.
-   * 
+   *
    * @returns An array of positions representing the Snake's segments.
    */
   getSegments(): Position[]
@@ -41,7 +41,7 @@ export class Snake
 
   /**
    * Returns the current direction of the Snake.
-   * 
+   *
    * @returns The direction of the Snake as a tuple [dx, dy].
    */
   getDirection(): Direction
@@ -52,7 +52,7 @@ export class Snake
   /**
    * Sets the direction of the Snake.
    * It prevents the Snake from reversing direction if it has more than one segment.
-   * 
+   *
    * @param newDirection - The new direction to set as a tuple [dx, dy].
    */
   setDirection(newDirection: Direction): void
@@ -73,7 +73,7 @@ export class Snake
   /**
    * Moves the Snake in its current direction.
    * It adds a new head segment and removes the tail segment.
-   * 
+   *
    * @returns The position of the removed tail segment as a tuple [x, y].
    */
   move(): Position
@@ -96,7 +96,7 @@ export class Snake
 
   /**
    * Grows the Snake by adding a new segment at the tail position.
-   * 
+   *
    * @param tailPosition - The position of the tail segment to add as a new segment.
    */
   grow(tailPosition: Position): void
@@ -106,7 +106,7 @@ export class Snake
 
   /**
    * Checks if the Snake has collided with itself.
-   * 
+   *
    * @returns True if the Snake has collided with itself, false otherwise.
    */
   checkSelfCollision(): boolean
@@ -121,7 +121,7 @@ export class Snake
 
   /**
    * Checks if the Snake occupies a specific position.
-   * 
+   *
    * @param position - The position to check as a tuple [x, y].
    * @returns True if the Snake occupies the specified position, false otherwise.
    */
@@ -135,7 +135,7 @@ export class Snake
 
   /**
    * Returns the length of the Snake.
-   * 
+   *
    * @returns The number of segments in the Snake.
    */
   getLength(): number
@@ -145,7 +145,7 @@ export class Snake
 
   /**
    * Resets the Snake to its initial state.
-   * 
+   *
    * @param initialPosition - The initial position of the Snake's head as a tuple [x, y].
    */
   reset(initialPosition: Position): void
@@ -157,7 +157,7 @@ export class Snake
   /**
    * Teleports the Snake to a new position.
    * It adjusts the segments based on the new head position while maintaining the relative positions.
-   * 
+   *
    * @param newPosition - The new position to teleport the Snake's head to as a tuple [x, y].
    */
   teleportTo(newPosition: Position): void

@@ -16,7 +16,7 @@ export class PositionValidator
 
   /**
    * Generates a valid position that is not occupied by any of the provided positions.
-   * 
+   *
    * @param occupiedPositions - An array of positions that are currently occupied.
    * @param maxAttempts - The maximum number of attempts to find a valid position.
    * @returns A valid position as a tuple [x, y], or null if no valid position is found.
@@ -43,7 +43,7 @@ export class PositionValidator
 
   /**
    * Checks if a given position is occupied by any of the provided positions.
-   * 
+   *
    * @param position - The position to check as a tuple [x, y].
    * @param occupiedPositions - An array of positions that are currently occupied.
    * @returns True if the position is occupied, false otherwise.
@@ -58,7 +58,7 @@ export class PositionValidator
 
   /**
    * Validates if a position is within the bounds of the board.
-   * 
+   *
    * @param position - The position to validate as a tuple [x, y].
    * @returns True if the position is valid, false otherwise.
    */
@@ -72,7 +72,7 @@ export class PositionValidator
 
   /**
    * Wraps a position around the board dimensions.
-   * 
+   *
    * @param position - The position to wrap as a tuple [x, y].
    * @returns The wrapped position as a tuple [x, y].
    */
@@ -88,7 +88,7 @@ export class PositionValidator
    * Wraps a position around the board dimensions.
    * This is useful for implementing a toroidal board where moving off one edge
    * brings the player to the opposite edge.
-   * 
+   *
    * @param position - The position to wrap as a tuple [x, y].
    * @returns A wrapped position as a tuple [x, y].
    */

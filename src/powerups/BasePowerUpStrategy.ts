@@ -3,7 +3,7 @@ import { TimeManager } from '@utils/TimeManager'
 
 /**
  * Abstract base class for power-up strategies that have a duration.
- * 
+ *
  * Handles common timer management and provides template methods for apply/remove logic.
  */
 export abstract class BasePowerUpStrategy implements IPowerUpStrategy
@@ -18,7 +18,7 @@ export abstract class BasePowerUpStrategy implements IPowerUpStrategy
 
   /**
    * Applies the power-up effect and sets a timer to remove it after the duration.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   apply(context: IPowerUpContext): void
@@ -36,7 +36,7 @@ export abstract class BasePowerUpStrategy implements IPowerUpStrategy
 
   /**
    * Removes the power-up effect and clears all timers.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   remove(context: IPowerUpContext): void
@@ -47,7 +47,7 @@ export abstract class BasePowerUpStrategy implements IPowerUpStrategy
 
   /**
    * Gets the duration of the power-up.
-   * 
+   *
    * @returns The duration in milliseconds.
    */
   getDuration(): number
@@ -58,7 +58,7 @@ export abstract class BasePowerUpStrategy implements IPowerUpStrategy
   /**
    * Abstract method to apply the specific power-up effect.
    * Must be implemented by subclasses.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected abstract applyEffect(context: IPowerUpContext): void
@@ -66,7 +66,7 @@ export abstract class BasePowerUpStrategy implements IPowerUpStrategy
   /**
    * Abstract method to remove the specific power-up effect.
    * Must be implemented by subclasses.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected abstract removeEffect(context: IPowerUpContext): void
@@ -79,7 +79,7 @@ export abstract class InstantPowerUpStrategy implements IPowerUpStrategy
 {
   /**
    * Applies the instant power-up effect.
-   * 
+   *
    * @param context The power-up context
    */
   apply(context: IPowerUpContext): void
@@ -89,7 +89,7 @@ export abstract class InstantPowerUpStrategy implements IPowerUpStrategy
 
   /**
    * No-op for instant power-ups since they don't have ongoing effects.
-   * 
+   *
    * @param context The power-up context
    */
   remove(context: IPowerUpContext): void
@@ -102,7 +102,7 @@ export abstract class InstantPowerUpStrategy implements IPowerUpStrategy
 
   /**
    * Returns 0 for instant power-ups since they don't have duration.
-   * 
+   *
    * @returns 0
    */
   getDuration(): number
@@ -113,7 +113,7 @@ export abstract class InstantPowerUpStrategy implements IPowerUpStrategy
   /**
    * Template method for applying the instant effect.
    * Subclasses must implement this method.
-   * 
+   *
    * @param context The power-up context
    */
   protected abstract applyInstantEffect(context: IPowerUpContext): void

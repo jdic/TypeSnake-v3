@@ -3,7 +3,7 @@ import * as readline from 'readline'
 
 /**
  * InputService handles keyboard input for the game.
- * 
+ *
  * It allows for key press events to be registered and processed,
  * enabling control over the game through keyboard interactions.
  */
@@ -46,7 +46,7 @@ export class InputService
 
   /**
    * Registers a key press handler for a specific key.
-   * 
+   *
    * @param key - The key to listen for.
    * @param handler - The function to call when the key is pressed.
    */
@@ -57,10 +57,10 @@ export class InputService
 
   /**
    * Registers handlers for movement keys.
-   * 
+   *
    * This method maps movement keys to their corresponding directions.
    * It allows for easy control of the game character's movement.
-   * 
+   *
    * @param onDirectionChange - Callback function to handle direction changes.
    */
   onMovement(onDirectionChange: (direction: Direction) => void): void

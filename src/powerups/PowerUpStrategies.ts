@@ -59,11 +59,11 @@ export class SlowMotionStrategy extends BasePowerUpStrategy
 
 /**
  * Strategy for the Bonus power-up.
- * 
+ *
  * This power-up temporarily increases the score per apple and changes the background icon.
- * 
+ *
  * It applies a flashing effect to the background icon for a specified duration.
- * 
+ *
  * After the duration, it resets the background icon and score per apple to their original values.
  */
 export class BonusStrategy extends BasePowerUpStrategy
@@ -80,7 +80,7 @@ export class BonusStrategy extends BasePowerUpStrategy
   /**
    * Applies the bonus effect by changing the background icon and score per apple.
    * It sets an interval to flash the background icon for the duration of the power-up.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override applyEffect(context: IPowerUpContext): void
@@ -103,7 +103,7 @@ export class BonusStrategy extends BasePowerUpStrategy
   /**
    * Removes the bonus effect by resetting the background icon and score per apple.
    * It clears the flashing interval.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override removeEffect(context: IPowerUpContext): void
@@ -135,7 +135,7 @@ export class InvincibilityStrategy extends BasePowerUpStrategy
   /**
    * Applies the invincibility effect by setting the snake to be invincible.
    * It uses a timeout to remove the invincibility after the specified duration.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override applyEffect(context: IPowerUpContext): void
@@ -145,7 +145,7 @@ export class InvincibilityStrategy extends BasePowerUpStrategy
 
   /**
    * Removes the invincibility effect by resetting the snake's invincibility status.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override removeEffect(context: IPowerUpContext): void
@@ -172,7 +172,7 @@ export class BoostStrategy extends BasePowerUpStrategy
   /**
    * Applies the boost effect by reducing the update time.
    * It sets a new interval to increase the game speed.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override applyEffect(context: IPowerUpContext): void
@@ -188,7 +188,7 @@ export class BoostStrategy extends BasePowerUpStrategy
   /**
    * Removes the boost effect by resetting the update time to its original value.
    * It clears the interval set during the boost.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override removeEffect(context: IPowerUpContext): void
@@ -207,7 +207,7 @@ export class TeleportStrategy extends InstantPowerUpStrategy
 {
   /**
    * Applies the teleport effect by moving the snake to a random position on the board.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override applyInstantEffect(context: IPowerUpContext): void
@@ -232,7 +232,7 @@ export class FreezeStrategy extends BasePowerUpStrategy
   /**
    * Applies the freeze effect by setting the game to a frozen state.
    * It uses a timeout to unfreeze the game after the specified duration.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override applyEffect(context: IPowerUpContext): void
@@ -242,7 +242,7 @@ export class FreezeStrategy extends BasePowerUpStrategy
 
   /**
    * Removes the freeze effect by unfreezing the game.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   protected override removeEffect(context: IPowerUpContext): void

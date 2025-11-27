@@ -59,7 +59,7 @@ export class PowerUp
   /**
    * Applies the power-up strategy to the provided context.
    * This method invokes the strategy's apply method, which defines the power-up's effects.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   apply(context: IPowerUpContext): void
@@ -70,7 +70,7 @@ export class PowerUp
   /**
    * Removes the power-up strategy from the provided context.
    * If the strategy has a remove method, it will be called to clean up the effects of the power-up.
-   * 
+   *
    * @param context - The context in which the power-up is applied.
    */
   remove(context: IPowerUpContext): void
@@ -84,7 +84,7 @@ export class PowerUp
   /**
    * Returns the duration of the power-up effect.
    * This is defined by the strategy associated with the power-up.
-   * 
+   *
    * @return The duration of the power-up effect in milliseconds.
    */
   getDuration(): number
