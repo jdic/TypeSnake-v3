@@ -145,12 +145,12 @@ export class GameConfigBuilder
 
     if (partialConfig.board)
     {
-      if (partialConfig.board.width)
+      if (partialConfig.board.width !== undefined)
       {
         builder.config.board.width = partialConfig.board.width
       }
 
-      if (partialConfig.board.height)
+      if (partialConfig.board.height !== undefined)
       {
         builder.config.board.height = partialConfig.board.height
       }
@@ -158,22 +158,22 @@ export class GameConfigBuilder
 
     if (partialConfig.game)
     {
-      if (partialConfig.game.difficulty)
+      if (partialConfig.game.difficulty !== undefined)
       {
         builder.config.game.difficulty = partialConfig.game.difficulty
       }
 
-      if (partialConfig.game.scorePerApple)
+      if (partialConfig.game.scorePerApple !== undefined)
       {
         builder.config.game.scorePerApple = partialConfig.game.scorePerApple
       }
 
-      if (partialConfig.game.updateTime)
+      if (partialConfig.game.updateTime !== undefined)
       {
         builder.config.game.updateTime = partialConfig.game.updateTime
       }
 
-      if (partialConfig.game.expandedRange)
+      if (partialConfig.game.expandedRange !== undefined)
       {
         builder.config.game.expandedRange = partialConfig.game.expandedRange
       }

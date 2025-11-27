@@ -250,6 +250,8 @@ export class GameEngine implements IPowerUpContext
         {
           this.render()
         }
+
+        this.previousBlinkState = hasBlinkingPowerUps
       }
     }, 125)
   }
@@ -595,7 +597,8 @@ export class GameEngine implements IPowerUpContext
   setInterval(callback: () => void, time: number): void
   {
     this.stopGameLoop()
-
+    // Keep currentUpdateTime in sync with active interval
+    this.currentUpdateTime = time
     this.gameInterval = setInterval(() =>
     {
       this.update()
