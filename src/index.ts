@@ -21,6 +21,7 @@ export { GameStateService } from './services/GameStateService'
 
 // Core
 export { GameEngine } from './core/GameEngine'
+export { CheatService } from './services/CheatService'
 
 // Utils
 export { MathUtils } from './utils/MathUtils'

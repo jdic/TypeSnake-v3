@@ -12,6 +12,7 @@ export class RenderService
   private icons: IIconsConfig
   private previousFrame: string = ''
   private isFirstRender: boolean = true
+  private overlayMessage: string = ''
 
   constructor(board: IBoardConfig, icons: IIconsConfig)
   {
@@ -83,6 +84,14 @@ export class RenderService
   updateBoard(board: IBoardConfig): void
   {
     this.board = board
+  }
+
+  /**
+   * Sets a temporary overlay message to be displayed in the UI area.
+   */
+  setOverlayMessage(message: string): void
+  {
+    this.overlayMessage = message
   }
 
   /**
@@ -199,6 +208,13 @@ export class RenderService
     const bottomLine = text + ' '.repeat(spacing) + activepowerUpsIcons
 
     let ui = `\n${bottomLine}\n`
+
+    if (this.overlayMessage)
+    {
+      const boardWidth = this.board.width * 2
+      const padding = Math.max(0, Math.floor((boardWidth - this.overlayMessage.length) / 2))
+      ui += ' '.repeat(padding) + this.overlayMessage + '\n'
+    }
 
     ui += this.buildGameStatusMessages(gameState)
 

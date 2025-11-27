@@ -5,6 +5,7 @@ import { PowerUpManager } from '@powerups/PowerUpManager'
 import { GameConfigBuilder } from '@config/ConfigBuilder'
 import { RenderService } from '@services/RenderService'
 import { InputService } from '@services/InputService'
+import { CheatService } from '@services/CheatService'
 import { DEFAULT_SPEEDS } from '@config/defaults'
 import { MathUtils } from '@utils/MathUtils'
 import { Apple } from '@entities/Apple'
@@ -27,6 +28,8 @@ export class GameEngine implements IPowerUpContext
   private inputService: InputService
   private renderService: RenderService
   private gameStateService: GameStateService
+  private cheatService: CheatService
+  private cheatBuffer: string = ''
 
   private gameInterval: Timer | null = null
 
@@ -64,6 +67,7 @@ export class GameEngine implements IPowerUpContext
 
     this.inputService = new InputService()
     this.renderService = new RenderService(this.config.board, this.config.icons)
+    this.cheatService = new CheatService()
 
     const initialState: IGameState =
     {
@@ -179,10 +183,69 @@ export class GameEngine implements IPowerUpContext
       }
     })
 
-    this.inputService.onKeyPress('r', () =>
+    this.inputService.onKeyPress('backspace', () =>
     {
       this.restart()
     })
+
+    if (this.config.game.allowCheats)
+    {
+      const codes = this.cheatService.getCodes()
+
+      this.inputService.onChar((ch: string) =>
+      {
+        this.cheatBuffer += ch
+
+        if (this.cheatBuffer.length > 40)
+        {
+          this.cheatBuffer = this.cheatBuffer.slice(-40)
+        }
+
+        const normalized = this.cheatBuffer.toUpperCase().replace(/[^A-Z0-9]/g, '')
+
+        for (const code of codes.sort((a, b) => b.length - a.length))
+        {
+          if (normalized.endsWith(code))
+          {
+            const isResurrectionCheat = ['ILLBEBACK', 'ILLBEBACK', 'TERMINATOR'].includes(code)
+            if (isResurrectionCheat && !this.gameStateService.isGameOver())
+            {
+              this.cheatBuffer = ''
+              break
+            }
+
+            const result = this.cheatService.execute(code, this)
+            let msg: string
+            switch (result)
+            {
+              case 'activated':
+                msg = `Cheat ON: ${code}`
+                break
+              case 'deactivated':
+                msg = `Cheat OFF: ${code}`
+                break
+              case 'instant':
+                msg = `Cheat used: ${code}`
+                break
+              default:
+                msg = `Unknown cheat: ${code}`
+            }
+
+            this.renderService.setOverlayMessage(msg)
+            this.forceRender()
+            this.cheatBuffer = ''
+
+            setTimeout(() =>
+            {
+              this.renderService.setOverlayMessage('')
+              this.forceRender()
+            }, 1200)
+
+            break
+          }
+        }
+      })
+    }
   }
 
   /**
@@ -610,6 +673,24 @@ export class GameEngine implements IPowerUpContext
     {
       this.update()
     }, time)
+  }
+
+  setGameOver(isGameOver: boolean): void
+  {
+    this.gameStateService.setGameOver(isGameOver)
+  }
+
+  isGameOver(): boolean
+  {
+    return this.gameStateService.isGameOver()
+  }
+
+  resumeGame(): void
+  {
+    if (!this.gameInterval && !this.gameStateService.isPaused())
+    {
+      this.startGameLoop()
+    }
   }
 
   // END Implementation of IPowerUpContext methods

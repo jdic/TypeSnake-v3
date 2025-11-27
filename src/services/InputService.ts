@@ -11,6 +11,7 @@ export class InputService
 {
   private keyHandlers: Map<string, () => void> = new Map()
   private isInitialized = false
+  private charHandlers: Set<(ch: string) => void> = new Set()
 
   /**
    * Initializes the input service.
@@ -38,6 +39,12 @@ export class InputService
         {
           process.exit(0)
         }
+      }
+
+      if (key && key.sequence && key.sequence.length === 1 && !key.ctrl && !key.meta)
+      {
+        const ch = key.sequence
+        this.charHandlers.forEach((fn) => fn(ch))
       }
     })
 
@@ -80,6 +87,19 @@ export class InputService
   }
 
   /**
+   * Subscribe to raw character input (printable characters only).
+   */
+  onChar(handler: (ch: string) => void): void
+  {
+    this.charHandlers.add(handler)
+  }
+
+  removeCharHandler(handler: (ch: string) => void): void
+  {
+    this.charHandlers.delete(handler)
+  }
+
+  /**
    * Clears all registered key handlers.
    */
   clearHandlers(): void
@@ -99,6 +119,7 @@ export class InputService
     }
 
     this.clearHandlers()
+    this.charHandlers.clear()
     this.isInitialized = false
   }
 }

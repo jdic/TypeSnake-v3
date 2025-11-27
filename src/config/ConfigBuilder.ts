@@ -69,6 +69,16 @@ export class GameConfigBuilder
   }
 
   /**
+   * Enables or disables cheat codes.
+   */
+  setAllowCheats(allow: boolean = true): this
+  {
+    this.config.game.allowCheats = allow
+
+    return this
+  }
+
+  /**
    * Enables or disables a specific power-up type.
    *
    * @param type - The type of power-up to enable or disable.
@@ -176,6 +186,11 @@ export class GameConfigBuilder
       if (partialConfig.game.expandedRange !== undefined)
       {
         builder.config.game.expandedRange = partialConfig.game.expandedRange
+      }
+
+      if (partialConfig.game.allowCheats !== undefined)
+      {
+        builder.config.game.allowCheats = partialConfig.game.allowCheats
       }
     }
 

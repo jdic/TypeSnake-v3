@@ -24,6 +24,7 @@ export interface IGameSettings
   scorePerApple: number
   expandedRange: number
   updateTime?: number
+  allowCheats?: boolean
 }
 
 export interface IPowerUpSettings

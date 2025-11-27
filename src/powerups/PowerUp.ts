@@ -26,6 +26,10 @@ export interface IPowerUpContext
   redraw(): void
   clearInterval(): void
   setInterval(callback: () => void, time: number): void
+
+  setGameOver(isGameOver: boolean): void
+  isGameOver(): boolean
+  resumeGame(): void
 }
 
 export interface IPowerUpStrategy

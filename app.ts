@@ -13,6 +13,7 @@ const config = new GameConfigBuilder()
   .enablePowerUp('freeze')
   .setIcon('background', '⬛')
   .setExpandedRange(1)
+  .setAllowCheats(true)
   .build()
 
 const game = new GameEngine(config)
