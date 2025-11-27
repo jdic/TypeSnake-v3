@@ -17,17 +17,4 @@ const config = new GameConfigBuilder()
 
 const game = new GameEngine(config)
 
-process.on('SIGINT', () =>
-{
-  console.log('\nBye')
-  game.stop()
-  process.exit(0)
-})
-
-process.on('SIGTERM', () =>
-{
-  game.stop()
-  process.exit(0)
-})
-
 game.start()
